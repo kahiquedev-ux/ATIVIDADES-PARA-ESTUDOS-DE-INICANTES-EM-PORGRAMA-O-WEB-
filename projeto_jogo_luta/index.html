@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arena dos Campeões - Jogo de Luta com Animações</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+/* Importação de Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', monospace;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #fff;
+  padding-top: 70px;
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 2px solid #ff0000;
+  background: #000 !important;
+  box-shadow: 0 2px 20px rgba(255,0,0,0.3);
+}
+
+.navbar-brand {
+  font-weight: 900;
+  color: #ff0000 !important;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(255,0,0,0.5);
+}
+
+.nav-link {
+  color: #fff !important;
+  transition: all 0.3s;
+}
+
+.nav-link:hover {
+  color: #ff0000 !important;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+#gameCarousel .carousel-item {
+  height: 70vh;
+  min-height: 500px;
+}
+
+#gameCarousel .carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);
+}
+
+.carousel-caption {
+  background: rgba(0,0,0,0.7);
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  border: 1px solid #ff0000;
+}
+
+/* Arena do Jogo */
+.arena-container {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  border: 1px solid #ff0000;
+}
+
+.battle-arena {
+  background: linear-gradient(180deg, #2a1a0a 0%, #1a0f0a 100%);
+  border-radius: 15px;
+  padding: 20px;
+  position: relative;
+  min-height: 550px;
+  border: 2px solid #ff0000;
+  overflow: hidden;
+}
+
+/* Chão da arena */
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, #8B4513, #654321, #8B4513);
+  border-radius: 5px;
+  box-shadow: 0 -2px 10px rgba(255,0,0,0.3);
+}
+
+/* Barras de Vida */
+.health-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.player-health, .enemy-health {
+  flex: 1;
+  background: rgba(0,0,0,0.8);
+  padding: 15px;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  border: 1px solid #ff0000;
+}
+
+.health-label {
+  color: #ff0000;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-shadow: 0 0 5px rgba(255,0,0,0.5);
+}
+
+.health-bar {
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 25px;
+}
+
+.health-fill {
+  background: linear-gradient(90deg, #ff0000, #ff6666);
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.health-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shine 1s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.health-text {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #ff0000;
+}
+
+.vs-divider {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(255,0,0,0.5);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.vs-text {
+  color: white;
+  font-weight: bold;
+  font-size: 1.8rem;
+  text-shadow: 2px 2px 4px black;
+}
+
+/* Lutadores */
+.fighters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  min-height: 350px;
+  padding: 0 50px;
+}
+
+.fighter {
+  text-align: center;
+  flex: 1;
+  transition: all 0.1s ease;
+}
+
+/* Sprite do Personagem - CONFIGURAÇÃO PARA MEXER BRAÇOS E PERNAS */
+.fighter-sprite {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(255,0,0,0.5));
+  transition: all 0.05s linear;
+}
+
+/* Animações dos membros */
+/* Braço Direito (vai mexer nos ataques) */
+.fighter-sprite {
+  animation: idle 1s ease-in-out infinite;
+}
+
+@keyframes idle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Animação de soco (BRAÇO SE MOVENDO) */
+.punch-animation {
+  animation: punchMove 0.2s ease-out !important;
+}
+
+@keyframes punchMove {
+  0% { transform: translateX(0) rotate(0deg); }
+  30% { transform: translateX(30px) rotate(-15deg); }
+  70% { transform: translateX(30px) rotate(-15deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+/* Animação de chute (PERNA SE MOVENDO) */
+.kick-animation {
+  animation: kickMove 0.25s ease-out !important;
+}
+
+@keyframes kickMove {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(60px) rotate(45deg); }
+  50% { transform: translateY(60px) rotate(45deg); }
+  75% { transform: translateY(20px) rotate(20deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Animação de dano */
+.hurt-animation {
+  animation: hurtShake 0.3s ease-out !important;
+}
+
+@keyframes hurtShake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-15px) rotate(-10deg); }
+  75% { transform: translateX(10px) rotate(10deg); }
+}
+
+/* Animação de pulo */
+.jump-animation {
+  animation: jumpMove 0.5s ease-out !important;
+}
+
+@keyframes jumpMove {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-80px); }
+  100% { transform: translateY(0); }
+}
+
+/* Animação de corrida (pernas se movendo) */
+.run-animation {
+  animation: runMove 0.2s linear infinite !important;
+}
+
+@keyframes runMove {
+  0% { transform: translateX(0) rotate(-5deg); }
+  50% { transform: translateX(5px) rotate(5deg); }
+  100% { transform: translateX(0) rotate(-5deg); }
+}
+
+/* Efeitos de Combate */
+.combat-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.damage-number {
+  position: absolute;
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 2rem;
+  text-shadow: 2px 2px 4px black;
+  animation: floatUp 1s ease forwards;
+  z-index: 100;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(1.5);
+  }
+}
+
+/* Efeito de impacto */
+.impact-effect {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,0,0,0.6), transparent);
+  border-radius: 50%;
+  animation: impact 0.3s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes impact {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Log de Combate */
+.combat-log {
+  background: rgba(0,0,0,0.8);
+  border-radius: 10px;
+  margin-top: 20px;
+  border: 1px solid #ff0000;
+}
+
+.log-title {
+  background: linear-gradient(90deg, #ff0000, #cc0000);
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  font-weight: bold;
+}
+
+.log-content {
+  padding: 10px;
+  height: 120px;
+  overflow-y: auto;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+
+.log-content div {
+  margin-bottom: 5px;
+  padding: 3px;
+  border-bottom: 1px solid #333;
+}
+
+/* Botão de combo */
+.combo-meter {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid #ff0000;
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 1.2rem;
+  z-index: 20;
+  white-space: nowrap;
+}
+
+@keyframes comboPulse {
+  0%, 100% { transform: scale(1); text-shadow: 0 0 5px #ff0000; }
+  50% { transform: scale(1.2); text-shadow: 0 0 20px #ff0000; }
+}
+
+/* Botões de controle */
+.control-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 12px 25px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+}
+
+.control-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(255,0,0,0.4);
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .fighter-sprite {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .vs-divider {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .vs-text {
+    font-size: 1.2rem;
+  }
+  
+  .control-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Categorias */
+.category-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+  border: 1px solid #ff0000;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255,0,0,0.3);
+}
+
+.category-card i {
+  font-size: 3rem;
+  color: #ff0000;
+  margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+  background: #000 !important;
+  border-top: 2px solid #ff0000;
+  margin-top: 50px;
+}
+
+.social-icons a {
+  font-size: 1.8rem;
+  transition: all 0.3s;
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.social-icons a:hover {
+  color: #ff0000 !important;
+  transform: translateY(-5px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<div class="container">
+<a class="navbar-brand" href="index.html">
+<i class="fas fa-fist-raised"></i> ARENA DOS CAMPEÕES
+</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
+<li class="nav-item"><a class="nav-link" href="#personagens">Personagens</a></li>
+<li class="nav-item"><a class="nav-link" href="#jogar">Lutar</a></li>
+<li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user"></i> Login</a></li>
+<li class="nav-item"><a class="nav-link" href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a></li>
+<li class="nav-item"><a class="nav-link" href="admin.html"><i class="fas fa-crown"></i> Admin</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- CARROSSEL -->
+<header class="hero-section" id="home">
+<div id="gameCarousel" class="carousel slide" data-bs-ride="carousel">
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active"></button>
+<button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="1"></button>
+</div>
+<div class="carousel-inner">
+<div class="carousel-item active">
+<img src="./img/outro.png" class="d-block w-100" alt="Arena">
+<div class="carousel-caption">
+<h5 style="color: #ff0000;">⚔️ DOMINE A ARENA! ⚔️</h5>
+<p>Controle seu guerreiro com animações reais de braços e pernas</p>
+<a href="#jogar" class="btn btn-danger btn-lg mt-3">BATALHAR AGORA</a>
+</div>
+</div>
+<div class="carousel-item">
+<img src="./img/outro.png" class="d-block w-100" alt="Personagens">
+<div class="carousel-caption">
+<h5 style="color: #ff0000;">🔥 ANIMAÇÕES REALISTAS! 🔥</h5>
+<p>Seus golpes ganham vida com movimentos de braços e pernas</p>
+<a href="#personagens" class="btn btn-danger btn-lg mt-3">VER PERSONAGENS</a>
+</div>
+</div>
+</div>
+<button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next">
+<span class="carousel-control-next-icon"></span>
+</button>
+</div>
+</header>
+
+<!-- PERSONAGENS -->
+<section id="personagens" class="container my-5">
+<h2 class="text-center mb-5" style="color:#ff0000;">⚡ NOSSOS CAMPEÕES ⚡</h2>
+<div class="row g-4">
+<div class="col-md-3">
+<div class="category-card">
+<i class="fas fa-fist-raised"></i>
+<h5>Kael - Guerreiro</h5>
+<p>Ataques rápidos e precisos</p>
+</div>
+</div>
+<div class="col-md-3">
+<div class="category-card">
+<i class="fas fa-magic"></i>
+<h5>Lyra - Feiticeira</h5>
+<p>Magias devastadoras</p>
+</div>
+</div>
+<div class="col-md-3">
+<div class="category-card">
+<i class="fas fa-shield-alt"></i>
+<h5>Brutus - Tanque</h5>
+<p>Defesa impenetrável</p>
+</div>
+</div>
+<div class="col-md-3">
+<div class="category-card">
+<i class="fas fa-bolt"></i>
+<h5>Zephyr - Veloz</h5>
+<p>Velocidade relâmpago</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- JOGO DE LUTA COM ANIMAÇÕES -->
+<section id="jogar" class="py-5">
+<div class="container">
+<h2 class="text-center mb-4" style="color:#ff0000;">⚔️ ARENA DE BATALHA ⚔️</h2>
+<p class="text-center mb-4">Controle seu guerreiro com animações de braços e pernas!</p>
+
+<div class="arena-container">
+<div class="battle-arena">
+<div class="ground"></div>
+
+<!-- Indicador de Combo -->
+<div id="comboMeter" class="combo-meter" style="display: none;">🔥 COMBO x0 🔥</div>
+
+<!-- Barras de Vida -->
+<div class="health-bars">
+<div class="player-health">
+<div class="health-label"><i class="fas fa-user"></i> GUERREIRO</div>
+<div class="health-bar">
+<div class="health-fill" id="playerHealthBar" style="width: 100%"></div>
+</div>
+<div class="health-text">HP: <span id="playerHp">100</span>%</div>
+</div>
+<div class="vs-divider"><span class="vs-text">VS</span></div>
+<div class="enemy-health">
+<div class="health-label"><i class="fas fa-skull"></i> OPONENTE</div>
+<div class="health-bar">
+<div class="health-fill" id="enemyHealthBar" style="width: 100%"></div>
+</div>
+<div class="health-text">HP: <span id="enemyHp">100</span>%</div>
+</div>
+</div>
+
+<!-- Lutadores -->
+<div class="fighters">
+<div class="fighter" id="playerFighter">
+<img src="./img/jogo.png" alt="Player" class="fighter-sprite" id="playerSprite">
+<div class="fighter-name">⚔️ KAEL, O GUERREIRO ⚔️</div>
+</div>
+<div class="fighter" id="enemyFighter">
+<img src="./img/outro.png" alt="Enemy" class="fighter-sprite" id="enemySprite">
+<div class="fighter-name">💀 BRUTUS, O TANQUE 💀</div>
+</div>
+</div>
+
+<div id="combatEffects" class="combat-effects"></div>
+</div>
+
+<!-- Log de Combate -->
+<div class="combat-log mt-3">
+<div class="log-title"><i class="fas fa-scroll"></i> HISTÓRICO DA BATALHA</div>
+<div id="combatLog" class="log-content">
+<div>⚔️ A BATALHA COMEÇOU! ⚔️</div>
+<div>🔹 Use ESPAÇO para SOCAR (BRAÇO)</div>
+<div>🔹 Use ENTER para CHUTAR (PERNA)</div>
+<div>🔹 Use SETAS ← → para MOVER</div>
+<div>🔹 Use ↑ para PULAR</div>
+</div>
+</div>
+
+<!-- Botões de Controle -->
+<div class="control-buttons">
+<button class="control-btn" id="btnPunch"><i class="fas fa-fist-raised"></i> SOCAR</button>
+<button class="control-btn" id="btnKick"><i class="fas fa-shoe-prints"></i> CHUTAR</button>
+<button class="control-btn" id="btnReset"><i class="fas fa-redo-alt"></i> REINICIAR</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="text-white text-center py-4">
+<div class="container">
+<p>&copy; 2024 ARENA DOS CAMPEÕES - O JOGO DE LUTA DEFINITIVO</p>
+<div class="social-icons mt-3">
+<a href="#" class="text-white me-3"><i class="fab fa-youtube"></i></a>
+<a href="#" class="text-white me-3"><i class="fab fa-twitch"></i></a>
+<a href="#" class="text-white"><i class="fab fa-discord"></i></a>
+</div>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// ============================================
+// JOGO DE LUTA COM ANIMAÇÕES DE BRAÇOS E PERNAS
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  let playerHealth = 100;
+  let enemyHealth = 100;
+  let isAttacking = false;
+  let isGameOver = false;
+  let comboCounter = 0;
+  let lastAttackTime = 0;
+  let comboTimeout = null;
+  
+  const playerSprite = document.getElementById('playerSprite');
+  const enemySprite = document.getElementById('enemySprite');
+  const playerHpText = document.getElementById('playerHp');
+  const enemyHpText = document.getElementById('enemyHp');
+  const playerHealthBar = document.getElementById('playerHealthBar');
+  const enemyHealthBar = document.getElementById('enemyHealthBar');
+  const combatLog = document.getElementById('combatLog');
+  const combatEffects = document.getElementById('combatEffects');
+  const comboMeter = document.getElementById('comboMeter');
+  
+  let playerX = 0;
+  let isMoving = false;
+  let moveInterval = null;
+  
+  // Função para adicionar log
+  function addLog(message, type = 'info') {
+    const logDiv = document.createElement('div');
+    const icon = type === 'damage' ? '💥' : (type === 'special' ? '⚡🔥' : '🔹');
+    logDiv.innerHTML = `${icon} ${message}`;
+    combatLog.appendChild(logDiv);
+    combatLog.scrollTop = combatLog.scrollHeight;
+    while (combatLog.children.length > 20) {
+      combatLog.removeChild(combatLog.firstChild);
+    }
+  }
+  
+  // Função para criar número de dano
+  function createDamageNumber(target, damage, isCritical = false) {
+    const damageNum = document.createElement('div');
+    damageNum.className = 'damage-number';
+    damageNum.textContent = isCritical ? `💀 ${damage} CRÍTICO!` : `-${damage}`;
+    damageNum.style.color = isCritical ? '#ff8800' : '#ff0000';
+    damageNum.style.fontSize = isCritical ? '2rem' : '1.5rem';
+    
+    const rect = target.getBoundingClientRect();
+    const arenaRect = document.querySelector('.battle-arena').getBoundingClientRect();
+    damageNum.style.left = (rect.left - arenaRect.left + rect.width / 2) + 'px';
+    damageNum.style.top = (rect.top - arenaRect.top + 50) + 'px';
+    combatEffects.appendChild(damageNum);
+    setTimeout(() => damageNum.remove(), 1000);
+  }
+  
+  // Função para criar efeito de impacto
+  function createImpactEffect(target) {
+    const impact = document.createElement('div');
+    impact.className = 'impact-effect';
+    const rect = target.getBoundingClientRect();
+    const arenaRect = document.querySelector('.battle-arena').getBoundingClientRect();
+    impact.style.left = (rect.left - arenaRect.left + rect.width / 2 - 40) + 'px';
+    impact.style.top = (rect.top - arenaRect.top + rect.height / 2 - 40) + 'px';
+    combatEffects.appendChild(impact);
+    setTimeout(() => impact.remove(), 300);
+  }
+  
+  // ANIMAÇÃO DO BRAÇO (Soco)
+  function animatePunch(sprite, isPlayer = true) {
+    sprite.classList.remove('punch-animation');
+    void sprite.offsetWidth; // Forçar reflow
+    sprite.classList.add('punch-animation');
+    
+    // Adicionar efeito de "rastro" do braço
+    if (isPlayer) {
+      const trail = document.createElement('div');
+      trail.style.position = 'absolute';
+      trail.style.width = '80px';
+      trail.style.height = '10px';
+      trail.style.background = 'linear-gradient(90deg, #ff0000, transparent)';
+      trail.style.borderRadius = '50%';
+      trail.style.pointerEvents = 'none';
+      trail.style.opacity = '0.8';
+      trail.style.animation = 'floatRight 0.2s ease-out forwards';
+      
+      const rect = sprite.getBoundingClientRect();
+      const arenaRect = document.querySelector('.battle-arena').getBoundingClientRect();
+      trail.style.left = (rect.right - arenaRect.left - 30) + 'px';
+      trail.style.top = (rect.top - arenaRect.top + 100) + 'px';
+      combatEffects.appendChild(trail);
+      setTimeout(() => trail.remove(), 200);
+    }
+    
+    setTimeout(() => {
+      sprite.classList.remove('punch-animation');
+    }, 200);
+  }
+  
+  // ANIMAÇÃO DA PERNA (Chute)
+  function animateKick(sprite, isPlayer = true) {
+    sprite.classList.remove('kick-animation');
+    void sprite.offsetWidth;
+    sprite.classList.add('kick-animation');
+    
+    setTimeout(() => {
+      sprite.classList.remove('kick-animation');
+    }, 250);
+  }
+  
+  // ANIMAÇÃO DE DANO
+  function animateHurt(sprite) {
+    sprite.classList.remove('hurt-animation');
+    void sprite.offsetWidth;
+    sprite.classList.add('hurt-animation');
+    setTimeout(() => {
+      sprite.classList.remove('hurt-animation');
+    }, 300);
+  }
+  
+  // ANIMAÇÃO DE PULO
+  function animateJump(sprite) {
+    sprite.classList.remove('jump-animation');
+    void sprite.offsetWidth;
+    sprite.classList.add('jump-animation');
+    setTimeout(() => {
+      sprite.classList.remove('jump-animation');
+    }, 500);
+  }
+  
+  // ANIMAÇÃO DE CORRIDA (PERNAS)
+  function startRunning(sprite, direction) {
+    if (moveInterval) clearInterval(moveInterval);
+    sprite.classList.add('run-animation');
+  }
+  
+  function stopRunning(sprite) {
+    sprite.classList.remove('run-animation');
+    if (moveInterval) clearInterval(moveInterval);
+    moveInterval = null;
+  }
+  
+  // Atualizar barras de vida
+  function updateHealthBars() {
+    playerHealthBar.style.width = playerHealth + '%';
+    enemyHealthBar.style.width = enemyHealth + '%';
+    playerHpText.textContent = Math.max(0, playerHealth);
+    enemyHpText.textContent = Math.max(0, enemyHealth);
+    
+    // Mudar cor das barras
+    if (playerHealth < 30) {
+      playerHealthBar.style.background = 'linear-gradient(90deg, #ff0000, #880000)';
+    } else {
+      playerHealthBar.style.background = 'linear-gradient(90deg, #ff0000, #ff6666)';
+    }
+    if (enemyHealth < 30) {
+      enemyHealthBar.style.background = 'linear-gradient(90deg, #ff0000, #880000)';
+    } else {
+      enemyHealthBar.style.background = 'linear-gradient(90deg, #ff0000, #ff6666)';
+    }
+  }
+  
+  // Sistema de Combo
+  function updateCombo() {
+    comboCounter++;
+    comboMeter.style.display = 'block';
+    comboMeter.innerHTML = `🔥 COMBO x${comboCounter} 🔥`;
+    comboMeter.style.animation = 'comboPulse 0.3s ease';
+    setTimeout(() => {
+      comboMeter.style.animation = '';
+    }, 300);
+    
+    if (comboTimeout) clearTimeout(comboTimeout);
+    comboTimeout = setTimeout(() => {
+      comboCounter = 0;
+      comboMeter.style.display = 'none';
+    }, 2000);
+  }
+  
+  // Verificar Game Over
+  function checkGameOver() {
+    if (playerHealth <= 0 && !isGameOver) {
+      isGameOver = true;
+      addLog('💀 VOCÊ FOI DERROTADO! GAME OVER! 💀', 'damage');
+      Swal.fire({
+        title: '💀 DERROTA! 💀',
+        text: 'Você foi derrotado na arena! Quer tentar novamente?',
+        icon: 'error',
+        background: '#1a1a2e',
+        color: 'white',
+        confirmButtonColor: '#ff0000',
+        confirmButtonText: 'REVANCHE!'
+      }).then((result) => {
+        if (result.isConfirmed) resetBattle();
+      });
+      return true;
+    } else if (enemyHealth <= 0 && !isGameOver) {
+      isGameOver = true;
+      addLog('🏆 VITÓRIA! Você derrotou o inimigo! 🏆', 'special');
+      Swal.fire({
+        title: '🏆 VITÓRIA! 🏆',
+        text: 'Parabéns! Você venceu a batalha!',
+        icon: 'success',
+        background: '#1a1a2e',
+        color: 'white',
+        confirmButtonColor: '#ff0000',
+        confirmButtonText: 'NOVA BATALHA!'
+      }).then(() => resetBattle());
+      return true;
+    }
+    return false;
+  }
+  
+  // ATAQUE DO JOGADOR
+  function playerAttack(type) {
+    if (isAttacking || isGameOver) return false;
+    
+    let damage, attackName, animation;
+    const isCritical = Math.random() < 0.15;
+    let baseDamage = 0;
+    
+    if (type === 'punch') {
+      baseDamage = 18;
+      attackName = 'Soco Poderoso';
+      animation = () => animatePunch(playerSprite, true);
+    } else {
+      baseDamage = 22;
+      attackName = 'Chute Giratório';
+      animation = () => animateKick(playerSprite, true);
+    }
+    
+    damage = Math.floor(baseDamage * (Math.random() * 0.3 + 0.85));
+    if (isCritical) damage = Math.floor(damage * 1.5);
+    
+    isAttacking = true;
+    animation();
+    
+    // Mover lutador para frente no ataque
+    const fighter = document.getElementById('playerFighter');
+    fighter.style.transform = 'translateX(40px)';
+    setTimeout(() => {
+      fighter.style.transform = 'translateX(0)';
+    }, 150);
+    
+    setTimeout(() => {
+      animateHurt(enemySprite);
+      createImpactEffect(enemySprite);
+      createDamageNumber(enemySprite, damage, isCritical);
+      
+      enemyHealth = Math.max(0, enemyHealth - damage);
+      updateHealthBars();
+      
+      const critText = isCritical ? ' CRÍTICO!' : '';
+      addLog(`🎯 ${attackName}${critText}! Causou ${damage} de dano!`, 'damage');
+      
+      if (isCritical) updateCombo();
+      else if (comboCounter > 0) {
+        comboCounter = 0;
+        comboMeter.style.display = 'none';
+      }
+      
+      isAttacking = false;
+      if (!checkGameOver()) {
+        setTimeout(() => enemyAttack(), 800);
+      }
+    }, 200);
+    
+    return true;
+  }
+  
+  // ATAQUE DO INIMIGO
+  function enemyAttack() {
+    if (isAttacking || isGameOver) return;
+    
+    const attacks = [
+      { name: 'Golpe Pesado', damage: 15, anim: () => animatePunch(enemySprite, false) },
+      { name: 'Investida', damage: 12, anim: () => animateKick(enemySprite, false) }
+    ];
+    
+    const attack = attacks[Math.floor(Math.random() * attacks.length)];
+    const actualDamage = Math.floor(attack.damage * (Math.random() * 0.3 + 0.85));
+    
+    isAttacking = true;
+    attack.anim();
+    
+    const enemyFighter = document.getElementById('enemyFighter');
+    enemyFighter.style.transform = 'translateX(-40px)';
+    setTimeout(() => {
+      enemyFighter.style.transform = 'translateX(0)';
+    }, 150);
+    
+    setTimeout(() => {
+      animateHurt(playerSprite);
+      createImpactEffect(playerSprite);
+      createDamageNumber(playerSprite, actualDamage);
+      
+      playerHealth = Math.max(0, playerHealth - actualDamage);
+      updateHealthBars();
+      addLog(`👊 Inimigo usou ${attack.name}! Você perdeu ${actualDamage} de vida!`, 'damage');
+      
+      isAttacking = false;
+      checkGameOver();
+    }, 200);
+  }
+  
+  // RESETAR BATALHA
+  function resetBattle() {
+    playerHealth = 100;
+    enemyHealth = 100;
+    isAttacking = false;
+    isGameOver = false;
+    comboCounter = 0;
+    comboMeter.style.display = 'none';
+    updateHealthBars();
+    
+    combatLog.innerHTML = '';
+    addLog('⚔️ A BATALHA RECOMEÇOU! ⚔️', 'special');
+    addLog('🔹 Use ESPAÇO para SOCAR (BRAÇO)', 'info');
+    addLog('🔹 Use ENTER para CHUTAR (PERNA)', 'info');
+    addLog('🔹 Use SETAS ← → para MOVER', 'info');
+    addLog('🔹 Acerte golpes seguidos para COMBO!', 'special');
+    
+    combatEffects.innerHTML = '';
+    
+    // Resetar posições
+    document.getElementById('playerFighter').style.transform = 'translateX(0)';
+    document.getElementById('enemyFighter').style.transform = 'translateX(0)';
+  }
+  
+  // MOVIMENTAÇÃO
+  function movePlayer(direction) {
+    if (isGameOver) return;
+    const fighter = document.getElementById('playerFighter');
+    let newX = playerX + direction;
+    if (newX >= -40 && newX <= 40) {
+      playerX = newX;
+      fighter.style.transform = `translateX(${playerX}px)`;
+      startRunning(playerSprite, direction);
+      setTimeout(() => stopRunning(playerSprite), 100);
+    }
+  }
+  
+  // CONTROLES DO TECLADO
+  document.addEventListener('keydown', (e) => {
+    if (isGameOver) return;
+    
+    switch(e.key) {
+      case ' ':
+      case 'Space':
+        e.preventDefault();
+        playerAttack('punch');
+        break;
+      case 'Enter':
+        e.preventDefault();
+        playerAttack('kick');
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        movePlayer(10);
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        movePlayer(-10);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        animateJump(playerSprite);
+        addLog('🔹 Você pulou!', 'info');
+        break;
+    }
+  });
+  
+  // Botões de toque para mobile
+  const btnPunch = document.getElementById('btnPunch');
+  const btnKick = document.getElementById('btnKick');
+  const btnReset = document.getElementById('btnReset');
+  
+  if (btnPunch) btnPunch.addEventListener('click', () => playerAttack('punch'));
+  if (btnKick) btnKick.addEventListener('click', () => playerAttack('kick'));
+  if (btnReset) btnReset.addEventListener('click', resetBattle);
+  
+  addLog('⚔️ Animações ATIVADAS! Braços e pernas em movimento! ⚔️', 'special');
+  
+  // Animação contínua de respiração (idle)
+  setInterval(() => {
+    if (!isAttacking && !isGameOver) {
+      playerSprite.style.animation = 'idle 1s ease-in-out infinite';
+      enemySprite.style.animation = 'idle 1s ease-in-out infinite';
+    }
+  }, 100);
+});
+</script>
+
+</body>
+</html>

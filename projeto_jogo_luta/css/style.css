@@ -1,0 +1,220 @@
+/* Importação de Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap');
+
+/* Estilos globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', monospace;
+  background-color: #0a0a0a;
+  color: #f8f9fa;
+  padding-top: 70px;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 2px solid #ff0000;
+  background: #1a1a1a !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+.navbar-brand {
+  font-weight: 900;
+  color: #ff0000 !important;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(255,0,0,0.5);
+}
+
+.navbar-brand i {
+  margin-right: 10px;
+}
+
+.nav-link {
+  color: #f8f9fa !important;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  margin: 0 5px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ff0000 !important;
+  transform: translateY(-2px);
+}
+
+/* Carrossel */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+#gameCarousel .carousel-item {
+  height: 80vh;
+  min-height: 500px;
+}
+
+#gameCarousel .carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.5) contrast(1.2);
+}
+
+#gameCarousel .carousel-caption {
+  background: rgba(0,0,0,0.6);
+  border-radius: 15px;
+  padding: 30px 40px;
+  bottom: 50%;
+  transform: translateY(50%);
+  backdrop-filter: blur(5px);
+  border: 1px solid #ff0000;
+}
+
+#gameCarousel .carousel-caption h5 {
+  font-size: 2.5rem;
+  color: #ff0000;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  margin-bottom: 1rem;
+}
+
+#gameCarousel .carousel-caption p {
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* Botões */
+.btn-danger {
+  background: linear-gradient(90deg, #ff0000, #cc0000);
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 12px 30px;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.btn-danger:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(255,0,0,0.4);
+}
+
+.btn-warning {
+  background: linear-gradient(90deg, #ffc107, #ff9800);
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 12px 30px;
+  border-radius: 30px;
+  color: #1a1a1a;
+}
+
+.btn-warning:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(255,193,7,0.4);
+}
+
+/* Personagens */
+#personagens {
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  padding: 60px 0;
+}
+
+.character-card {
+  border: 2px solid #ff0000;
+  border-radius: 15px;
+  background: #1a1a2e !important;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.character-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255,0,0,0.5);
+}
+
+.character-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #ff0000;
+}
+
+.character-card .card-title {
+  color: #ff0000;
+  font-size: 1.3rem;
+  margin: 15px 0 10px;
+}
+
+.skills .badge {
+  margin: 3px;
+  font-size: 0.7rem;
+}
+
+/* Seção Jogar */
+#jogar {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  padding: 60px 0;
+}
+
+/* Footer */
+footer {
+  background: #0a0a0a !important;
+  border-top: 2px solid #ff0000;
+}
+
+.social-icons a {
+  font-size: 1.8rem;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.social-icons a:hover {
+  color: #ff0000 !important;
+  transform: translateY(-5px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  body {
+    padding-top: 56px;
+  }
+  
+  #gameCarousel .carousel-item {
+    height: 50vh;
+  }
+  
+  #gameCarousel .carousel-caption h5 {
+    font-size: 1.2rem;
+  }
+  
+  #gameCarousel .carousel-caption p {
+    font-size: 0.8rem;
+  }
+  
+  .character-card .card-img-top {
+    height: 150px;
+  }
+}
+
+/* Animações */
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 5px #ff0000; }
+  50% { text-shadow: 0 0 20px #ff0000; }
+}
+
+.glow-text {
+  animation: glow 1.5s ease infinite;
+}
