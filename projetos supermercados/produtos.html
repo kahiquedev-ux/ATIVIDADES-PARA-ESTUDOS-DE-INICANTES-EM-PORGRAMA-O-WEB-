@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | SuperPlus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <div class="logo-area"><img src="img/logo.png" class="logo-img"><span class="logo-text">Super<span>Plus</span></span></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="produtos.html" class="active">Produtos</a></li>
+                    <li><a href="carrinho.html"><i class="fas fa-shopping-cart"></i> Carrinho <span class="carrinho-badge" id="carrinhoBadgeHeader">0</span></a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="products-layout">
+            <aside class="filters-sidebar">
+                <h3><i class="fas fa-filter"></i> Filtros</h3>
+                <div class="filter-group"><label>🔍 Buscar Produto</label><input type="text" id="searchInput" placeholder="Digite o nome..."></div>
+                <div class="filter-group"><label>💰 Preço Mínimo</label><input type="number" id="minPrice" placeholder="R$ 0"></div>
+                <div class="filter-group"><label>💰 Preço Máximo</label><input type="number" id="maxPrice" placeholder="R$ 500"></div>
+                <div class="filter-group"><label>🏷️ Marca</label><select id="brandFilter"><option value="">Todas</option><option value="Nestlé">Nestlé</option><option value="Coca-Cola">Coca-Cola</option><option value="P&G">P&G</option><option value="Itambé">Itambé</option><option value="Sadia">Sadia</option><option value="Unilever">Unilever</option><option value="Parmalat">Parmalat</option><option value="Heinz">Heinz</option></select></div>
+                <div class="filter-group"><label>📦 Categoria</label><select id="categoryFilter"><option value="">Todas</option><option value="Bebidas">Bebidas</option><option value="Alimentos">Alimentos</option><option value="Limpeza">Limpeza</option><option value="Higiene">Higiene</option><option value="Frios">Frios</option><option value="Padaria">Padaria</option><option value="Hortifruti">Hortifruti</option></select></div>
+                <button id="clearFilters" class="btn-primary" style="width:100%">Limpar Filtros</button>
+            </aside>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container"><div class="footer-bottom"><p>© 2025 SuperMercado Plus - 40 produtos com os melhores preços</p></div></div>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>

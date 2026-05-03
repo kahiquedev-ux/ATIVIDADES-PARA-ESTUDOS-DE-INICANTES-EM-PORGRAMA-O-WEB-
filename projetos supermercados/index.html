@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperMercado Plus | O melhor para você</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <div class="logo-area">
+                <img src="img/logo.png" class="logo-img" onerror="this.src='https://placehold.co/180x60?text=Super+Plus'">
+                <span class="logo-text">Super<span>Plus</span></span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="produtos.html"><i class="fas fa-boxes"></i> Produtos</a></li>
+                    <li><a href="carrinho.html"><i class="fas fa-shopping-cart"></i> Carrinho <span class="carrinho-badge" id="carrinhoBadgeHeader">0</span></a></li>
+                    <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Carrossel -->
+        <section class="carousel-section">
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <div class="slide"><img src="img/outros.png" alt="Ofertas"><div class="slide-caption"><h2>🔥 Ofertas Imperdíveis</h2><p>Até 60% OFF</p></div></div>
+                    <div class="slide"><img src="img/outros.png" alt="Hortifruti"><div class="slide-caption"><h2>🥬 Hortifruti Fresco</h2><p>Direto da fazenda</p></div></div>
+                    <div class="slide"><img src="img/outros.png" alt="Bebidas"><div class="slide-caption"><h2>🍺 Bebidas Geladas</h2><p>Melhores marcas</p></div></div>
+                    <div class="slide"><img src="img/outros.png" alt="Carnes"><div class="slide-caption"><h2>🥩 Carnes Premium</h2><p>Corte nobre</p></div></div>
+                    <div class="slide"><img src="img/outros.png" alt="Padaria"><div class="slide-caption"><h2>🥖 Padaria Artesanal</h2><p>Pães quentinhos</p></div></div>
+                </div>
+                <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-dots"></div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features container">
+            <div class="features-grid">
+                <div class="feature-card"><i class="fas fa-truck-fast"></i><h3>Entrega Rápida</h3><p>Em até 2 horas</p></div>
+                <div class="feature-card"><i class="fas fa-percent"></i><h3>Descontos Diários</h3><p>Clube de vantagens</p></div>
+                <div class="feature-card"><i class="fas fa-credit-card"></i><h3>Parcele em 6x</h3><p>Sem juros</p></div>
+                <div class="feature-card"><i class="fas fa-shield-alt"></i><h3>Produtos Seguros</h3><p>Garantia de qualidade</p></div>
+            </div>
+        </section>
+
+        <!-- Newsletter Centralizada -->
+        <section class="newsletter container">
+            <div class="newsletter-content">
+                <h2><i class="fas fa-envelope"></i> Receba Ofertas Exclusivas</h2>
+                <p>Cadastre-se e ganhe 10% OFF na primeira compra!</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required>
+                    <button type="submit">Inscrever-se <i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Categorias -->
+        <section class="container">
+            <h2 style="text-align:center; margin:40px 0 30px;">Categorias em Destaque</h2>
+            <div class="features-grid" style="margin-top:0">
+                <div class="feature-card"><i class="fas fa-apple-alt"></i><h3>Hortifruti</h3></div>
+                <div class="feature-card"><i class="fas fa-wine-bottle"></i><h3>Bebidas</h3></div>
+                <div class="feature-card"><i class="fas fa-soap"></i><h3>Limpeza</h3></div>
+                <div class="feature-card"><i class="fas fa-tooth"></i><h3>Higiene</h3></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>SuperPlus</h4>
+                    <p>O supermercado que cuida de você e da sua família. Qualidade e preço baixo todos os dias.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Institucional</h4>
+                    <a href="#">Sobre Nós</a>
+                    <a href="#">Trabalhe Conosco</a>
+                    <a href="#">Imprensa</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Atendimento</h4>
+                    <a href="#">Central de Ajuda</a>
+                    <a href="#">Fale Conosco</a>
+                    <a href="#">Trocas e Devoluções</a>
+                    <a href="#">Política de Privacidade</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-phone"></i> (11) 4000-0000</p>
+                    <p><i class="fas fa-envelope"></i> contato@superplus.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - SP</p>
+                    <p><i class="fas fa-clock"></i> Seg-Dom: 8h às 22h</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SuperMercado Plus - Todos os direitos reservados. Projeto TCC</p>
+                <p><i class="fas fa-credit-card"></i> Aceitamos todas as bandeiras | <i class="fas fa-lock"></i> Site 100% seguro</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
