@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Maria Fernanda · Portfólio Feminino</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor-glow"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">✨ Fernanda Dev</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-item active">Início</a></li>
+                <li><a href="#sobre" class="nav-item">Sobre</a></li>
+                <li><a href="#projetos" class="nav-item">Projetos</a></li>
+                <li><a href="#formacao" class="nav-item">Formação</a></li>
+                <li><a href="#contato" class="nav-item">Contato</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HOME -->
+        <section id="home" class="section home-section">
+            <div class="home-container">
+                <div class="home-image">
+                    <div class="image-frame">
+                        <img src="img/eu.png" alt="Maria Fernanda">
+                    </div>
+                </div>
+                <div class="home-content">
+                    <span class="greeting">Olá, eu sou</span>
+                    <h1 class="typing-title"></h1>
+                    <p class="home-description">Crio experiências digitais elegantes, funcionais e cheias de personalidade. Especialista em transformar ideias em código com muito amor e detalhe.</p>
+                    <div class="home-buttons">
+                        <a href="#projetos" class="btn-primary">Ver Projetos <i class="fas fa-arrow-down"></i></a>
+                        <a href="#contato" class="btn-secondary">Vamos conversar <i class="fas fa-heart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE -->
+        <section id="sobre" class="section about-section">
+            <div class="container">
+                <h2 class="section-title">Sobre <span>mim</span></h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Sou uma desenvolvedora apaixonada por tecnologia, design e criar soluções que realmente fazem a diferença. Com mais de 4 anos de experiência, já colaborei em projetos desafiadores nas áreas de e-commerce, educação e saúde.</p>
+                        <p>Acredito que um código bonito também é aquele que resolve problemas reais com simplicidade e leveza. Fora do mundo dev, amo café, livros de ficção e explorar novas formas de arte visual.</p>
+                        <div class="skills">
+                            <span>HTML/CSS</span>
+                            <span>JavaScript</span>
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>UI/UX</span>
+                            <span>Figma</span>
+                        </div>
+                    </div>
+                    <div class="about-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <p>A tecnologia é mais bonita quando a gente consegue enxergar a sensibilidade por trás de cada linha de código.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJETOS - 20 PROJETOS COM LINK GITHUB -->
+        <section id="projetos" class="section projects-section">
+            <div class="container">
+                <h2 class="section-title">Meus <span>Projetos</span></h2>
+                <p class="section-subtitle">Conheça alguns dos trabalhos que desenvolvi com carinho</p>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- 20 projetos gerados dinamicamente via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMAÇÃO -->
+        <section id="formacao" class="section formation-section">
+            <div class="container">
+                <h2 class="section-title">Formação & <span>Certificados</span></h2>
+                <div class="formation-grid">
+                    <div class="formation-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Análise e Desenvolvimento de Sistemas</h3>
+                        <p>Universidade Tecnológica · 2020 - 2023</p>
+                    </div>
+                    <div class="formation-card">
+                        <i class="fas fa-code"></i>
+                        <h3>Desenvolvimento Front-end Avançado</h3>
+                        <p>Rocketseat · 2024</p>
+                    </div>
+                    <div class="formation-card">
+                        <i class="fas fa-palette"></i>
+                        <h3>UI/UX Design para Devs</h3>
+                        <p>Origamid · 2023</p>
+                    </div>
+                    <div class="formation-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Banco de Dados e Node.js</h3>
+                        <p>Alura · 2024</p>
+                    </div>
+                </div>
+                <div class="certificates">
+                    <h3><i class="fas fa-award"></i> Certificações</h3>
+                    <ul>
+                        <li>JavaScript Avançado - Coderhouse</li>
+                        <li>React com Hooks - Udemy</li>
+                        <li>Responsive Web Design - freeCodeCamp</li>
+                        <li>Scrum Foundation - EXIN</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTATO COM ANIMAÇÃO JS -->
+        <section id="contato" class="section contact-section">
+            <div class="container">
+                <h2 class="section-title">Vamos <span>conversar</span></h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Entre em contato</h3>
+                        <p>Adoro novos desafios e trocar ideias criativas. Me mande uma mensagem e retorno assim que possível!</p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>(11) 99999-9999</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>maria.fernanda@devportfolio.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <span>github.com/mariafernanda</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <span>linkedin.com/in/mariafernanda</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Seu e-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" rows="5" placeholder="Sua mensagem..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Enviar mensagem <i class="fas fa-paper-plane"></i></button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Maria Fernanda · Feito com <i class="fas fa-heart"></i> e muito café</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
