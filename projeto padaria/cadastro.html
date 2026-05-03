@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro - Sabor Divino Padaria</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #fefaf5 0%, #fff0e0 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.register-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 40px;
+}
+
+.register-container {
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 25px 50px rgba(139,69,19,0.15);
+  overflow: hidden;
+  max-width: 500px;
+  width: 100%;
+  animation: fadeInUp 0.6s ease;
+}
+
+.register-header {
+  background: linear-gradient(135deg, #8B4513, #D2691E);
+  padding: 35px 30px;
+  text-align: center;
+  position: relative;
+}
+
+.register-header::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: white;
+  border-radius: 50% 50% 0 0;
+}
+
+.register-header img {
+  height: 60px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+}
+
+.register-header h2 {
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.register-header p {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+}
+
+.register-body {
+  padding: 35px 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #8B4513;
+  font-size: 0.85rem;
+}
+
+.form-group .input-icon {
+  position: relative;
+}
+
+.form-group .input-icon i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #D2691E;
+  font-size: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px 12px 42px;
+  border: 2px solid #f0e0d0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  background: #fffaf5;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #D2691E;
+  box-shadow: 0 0 0 3px rgba(210,105,30,0.1);
+}
+
+.password-strength {
+  margin-top: 5px;
+  font-size: 0.75rem;
+}
+
+.strength-bar {
+  height: 4px;
+  width: 100%;
+  background: #eee;
+  border-radius: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: all 0.3s;
+  border-radius: 4px;
+}
+
+.btn-register {
+  width: 100%;
+  background: linear-gradient(135deg, #8B4513, #D2691E);
+  border: none;
+  padding: 14px;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139,69,19,0.3);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #f0e0d0;
+}
+
+.login-link a {
+  color: #D2691E;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.login-link a:hover {
+  color: #8B4513;
+  text-decoration: underline;
+}
+
+.back-home {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.back-home a {
+  color: #999;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.back-home a:hover {
+  color: #D2691E;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  font-size: 0.8rem;
+}
+
+.terms input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.terms label {
+  color: #666;
+  cursor: pointer;
+}
+
+.terms a {
+  color: #D2691E;
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .register-body {
+    padding: 25px 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR SIMPLES -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: white !important; box-shadow: 0 2px 15px rgba(0,0,0,0.05);">
+<div class="container">
+<a class="navbar-brand" href="index.html">
+<img src="./img/logo.png" alt="Logo" height="40" class="me-2">
+<span style="font-family: 'Playfair Display', serif; font-weight: 700; color: #8B4513;">Sabor Divino</span>
+</a>
+<a href="index.html" class="btn btn-outline-secondary btn-sm">← Voltar</a>
+</div>
+</nav>
+
+<div class="register-wrapper">
+<div class="register-container">
+<div class="register-header">
+<img src="./img/logo.png" alt="Logo">
+<h2>Criar Conta 🍞</h2>
+<p>Cadastre-se para fazer pedidos</p>
+</div>
+
+<div class="register-body">
+<form id="registerForm">
+<div class="form-group">
+<label>Nome Completo</label>
+<div class="input-icon">
+<i class="fas fa-user"></i>
+<input type="text" class="form-control" id="nome" placeholder="Digite seu nome completo" required>
+</div>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<div class="input-icon">
+<i class="fas fa-envelope"></i>
+<input type="email" class="form-control" id="email" placeholder="Digite seu email" required>
+</div>
+</div>
+
+<div class="form-group">
+<label>Usuário</label>
+<div class="input-icon">
+<i class="fas fa-user-circle"></i>
+<input type="text" class="form-control" id="newUsername" placeholder="Escolha um usuário" required>
+</div>
+</div>
+
+<div class="form-group">
+<label>Senha</label>
+<div class="input-icon">
+<i class="fas fa-lock"></i>
+<input type="password" class="form-control" id="newPassword" placeholder="Crie uma senha" required>
+</div>
+<div class="password-strength" id="passwordStrength"></div>
+<div class="strength-bar">
+<div class="strength-fill" id="strengthFill"></div>
+</div>
+</div>
+
+<div class="form-group">
+<label>Confirmar Senha</label>
+<div class="input-icon">
+<i class="fas fa-check-circle"></i>
+<input type="password" class="form-control" id="confirmPassword" placeholder="Confirme sua senha" required>
+</div>
+</div>
+
+<div class="terms">
+<input type="checkbox" id="acceptTerms" required>
+<label for="acceptTerms">Eu aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
+</div>
+
+<button type="submit" class="btn-register">
+<i class="fas fa-user-plus me-2"></i> Criar Conta
+</button>
+
+<div id="registerMessage" class="mt-3 text-center" style="font-size: 0.9rem;"></div>
+</form>
+
+<div class="login-link">
+<a href="login.html">
+<i class="fas fa-sign-in-alt me-1"></i> Já tem conta? Faça login
+</a>
+</div>
+
+<div class="back-home">
+<a href="index.html">
+<i class="fas fa-arrow-left me-1"></i> Voltar para a loja
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// FUNÇÃO PARA VERIFICAR FORÇA DA SENHA
+function checkPasswordStrength(password) {
+  let strength = 0;
+  let message = '';
+  let color = '';
+  
+  if (password.length >= 6) strength++;
+  if (password.length >= 10) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+  
+  switch(strength) {
+    case 0:
+    case 1:
+      message = '🔴 Senha fraca';
+      color = '#dc3545';
+      width = '25%';
+      break;
+    case 2:
+    case 3:
+      message = '🟡 Senha média';
+      color = '#ffc107';
+      width = '50%';
+      break;
+    case 4:
+      message = '🟢 Senha forte';
+      color = '#28a745';
+      width = '75%';
+      break;
+    case 5:
+      message = '💪 Senha muito forte!';
+      color = '#20c997';
+      width = '100%';
+      break;
+    default:
+      message = 'Digite uma senha';
+      color = '#ccc';
+      width = '0%';
+  }
+  
+  document.getElementById('passwordStrength').innerHTML = message;
+  document.getElementById('strengthFill').style.width = width;
+  document.getElementById('strengthFill').style.background = color;
+  
+  return strength >= 3;
+}
+
+// EVENTO PARA VERIFICAR SENHA EM TEMPO REAL
+document.getElementById('newPassword').addEventListener('input', function() {
+  checkPasswordStrength(this.value);
+});
+
+// FUNÇÃO DE CADASTRO COMPLETA
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const username = document.getElementById('newUsername').value.trim();
+  const password = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const acceptTerms = document.getElementById('acceptTerms').checked;
+  const registerMessage = document.getElementById('registerMessage');
+  
+  // Validação de campos vazios
+  if (!nome || !email || !username || !password) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Preencha todos os campos!</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Campos incompletos',
+      text: 'Por favor, preencha todos os campos do formulário.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Validação de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Digite um email válido!</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Email inválido',
+      text: 'Por favor, digite um endereço de email válido.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Validação de tamanho do usuário
+  if (username.length < 3) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Usuário deve ter pelo menos 3 caracteres!</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Usuário inválido',
+      text: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Validação de força da senha
+  const strength = checkPasswordStrength(password);
+  if (!strength) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Escolha uma senha mais forte! (mínimo 6 caracteres)</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Senha fraca',
+      text: 'Escolha uma senha com pelo menos 6 caracteres, incluindo letras e números.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Validação de confirmação de senha
+  if (password !== confirmPassword) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> As senhas não coincidem!</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Senhas diferentes',
+      text: 'A senha e a confirmação de senha devem ser iguais.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Validação dos termos
+  if (!acceptTerms) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Você precisa aceitar os Termos de Uso!</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Termos não aceitos',
+      text: 'Por favor, aceite os Termos de Uso para continuar.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Buscar usuários existentes
+  let users = JSON.parse(localStorage.getItem('padariaUsers')) || [];
+  
+  // Verificar se usuário já existe
+  const userExists = users.find(u => u.username === username || u.email === email);
+  
+  if (userExists) {
+    registerMessage.innerHTML = '<span style="color: #dc3545;"><i class="fas fa-exclamation-circle"></i> Este usuário ou email já está cadastrado!</span>';
+    Swal.fire({
+      icon: 'error',
+      title: 'Usuário já existe',
+      text: 'Já existe uma conta com este usuário ou email. Faça login ou use outros dados.',
+      confirmButtonColor: '#D2691E'
+    });
+    return;
+  }
+  
+  // Criar novo usuário
+  const newUser = {
+    id: Date.now(),
+    nome: nome,
+    email: email,
+    username: username,
+    password: password,
+    createdAt: new Date().toISOString()
+  };
+  
+  users.push(newUser);
+  localStorage.setItem('padariaUsers', JSON.stringify(users));
+  
+  // Mostrar mensagem de sucesso
+  registerMessage.innerHTML = '<span style="color: #28a745;"><i class="fas fa-check-circle"></i> Cadastro realizado com sucesso!</span>';
+  
+  Swal.fire({
+    icon: 'success',
+    title: 'Cadastro realizado!',
+    html: `Bem-vindo(a), <strong>${nome}</strong>!<br>Sua conta foi criada com sucesso.`,
+    confirmButtonColor: '#D2691E',
+    confirmButtonText: 'Fazer Login'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = 'login.html';
+    }
+  });
+  
+  // Limpar formulário
+  this.reset();
+  document.getElementById('strengthFill').style.width = '0%';
+  document.getElementById('passwordStrength').innerHTML = '';
+});
+
+// Verificar se já está logado
+if (localStorage.getItem('loggedIn') === 'true') {
+  Swal.fire({
+    icon: 'info',
+    title: 'Você já está logado!',
+    text: 'Redirecionando para a página inicial...',
+    timer: 1500,
+    showConfirmButton: false
+  }).then(() => {
+    window.location.href = 'index.html';
+  });
+}
+</script>
+
+</body>
+</html>

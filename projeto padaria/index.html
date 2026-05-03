@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabor Divino Padaria - Pães e Doces Artesanais</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR FIXA -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<div class="container">
+<a class="navbar-brand" href="index.html">
+<img src="./img/logo.png" alt="Logo" height="45" class="me-2">
+<span>Sabor Divino</span>
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="#produtos">Produtos</a></li>
+<li class="nav-item"><a class="nav-link" href="#promocoes">Promoções</a></li>
+<li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+<li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+<li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user"></i> Login</a></li>
+<li class="nav-item"><a class="nav-link" href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a></li>
+<li class="nav-item">
+<button class="nav-link cart-icon-btn" id="cartSidebarBtn">
+<i class="fas fa-shopping-cart"></i> Carrinho
+<span id="cartCount" class="cart-badge">0</span>
+</button>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- CARROSSEL COM 5 BANNERS (MESMA IMAGEM) -->
+<header class="hero-section" id="home">
+<div id="padariaCarousel" class="carousel slide" data-bs-ride="carousel">
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#padariaCarousel" data-bs-slide-to="0" class="active"></button>
+<button type="button" data-bs-target="#padariaCarousel" data-bs-slide-to="1"></button>
+<button type="button" data-bs-target="#padariaCarousel" data-bs-slide-to="2"></button>
+<button type="button" data-bs-target="#padariaCarousel" data-bs-slide-to="3"></button>
+<button type="button" data-bs-target="#padariaCarousel" data-bs-slide-to="4"></button>
+</div>
+
+<div class="carousel-inner">
+<div class="carousel-item active">
+<img src="./img/banner.png" class="d-block w-100" alt="Banner 1">
+<div class="carousel-caption animate__animated animate__fadeInUp">
+<h5>Pães Quentinhos a Toda Hora! 🥖</h5>
+<p>Feitos com amor e ingredientes selecionados</p>
+<a href="#produtos" class="btn btn-primary btn-lg">VER PRODUTOS</a>
+</div>
+</div>
+<div class="carousel-item">
+<img src="./img/banner.png" class="d-block w-100" alt="Banner 2">
+<div class="carousel-caption animate__animated animate__fadeInUp">
+<h5>Doces e Bolos Artesanais 🎂</h5<p>Para adoçar seu dia com muito sabor</p>
+<a href="#produtos" class="btn btn-warning btn-lg">CONHEÇA</a>
+</div>
+</div>
+<div class="carousel-item">
+<img src="./img/banner.png" class="d-block w-100" alt="Banner 3">
+<div class="carousel-caption animate__animated animate__fadeInUp">
+<h5>Café da Manhã Especial ☕</h5>
+<p>Comece o dia com energia e sabor</p>
+<a href="#produtos" class="btn btn-primary btn-lg">PEDIR</a>
+</div>
+</div>
+<div class="carousel-item">
+<img src="./img/banner.png" class="d-block w-100" alt="Banner 4">
+<div class="carousel-caption animate__animated animate__fadeInUp">
+<h5>Delivery Rápido e Grátis! 🚚</h5>
+<p>Receba em casa com todo carinho</p>
+<a href="#produtos" class="btn btn-warning btn-lg">FAZER PEDIDO</a>
+</div>
+</div>
+<div class="carousel-item">
+<img src="./img/banner.png" class="d-block w-100" alt="Banner 5">
+<div class="carousel-caption animate__animated animate__fadeInUp">
+<h5>Promoções Imperdíveis! 🎉</h5>
+<p>Ofertas especiais para você</p>
+<a href="#promocoes" class="btn btn-primary btn-lg">APROVEITAR</a>
+</div>
+</div>
+</div>
+
+<button class="carousel-control-prev" type="button" data-bs-target="#padariaCarousel" data-bs-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#padariaCarousel" data-bs-slide="next">
+<span class="carousel-control-next-icon"></span>
+</button>
+</div>
+</header>
+
+<!-- SEÇÃO DE DIFERENCIAIS -->
+<section class="features-section">
+<div class="container">
+<div class="row g-4">
+<div class="col-md-3 text-center">
+<div class="feature-card">
+<i class="fas fa-bread-slice"></i>
+<h5>Pães Artesanais</h5>
+<p>Receitas tradicionais</p>
+</div>
+</div>
+<div class="col-md-3 text-center">
+<div class="feature-card">
+<i class="fas fa-leaf"></i>
+<h5>Ingredientes Naturais</h5>
+<p>Sem conservantes</p>
+</div>
+</div>
+<div class="col-md-3 text-center">
+<div class="feature-card">
+<i class="fas fa-truck"></i>
+<h5>Delivery Grátis</h5>
+<p>Pedidos acima de R$50</p>
+</div>
+</div>
+<div class="col-md-3 text-center">
+<div class="feature-card">
+<i class="fas fa-star"></i>
+<h5>Qualidade Premium</h5>
+<p>Nota 4.9/5 no Google</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SEÇÃO DE PRODUTOS -->
+<section id="produtos" class="products-section">
+<div class="container">
+<h2 class="section-title animate__animated animate__fadeInUp">🍞 Nossos Produtos 🥐</h2>
+<p class="section-subtitle">Feitos com amor e ingredientes selecionados</p>
+
+<div class="row g-4" id="productsContainer">
+<!-- Produto 1 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Pão Francês">
+<div class="product-overlay">
+<button class="btn btn-view" data-bs-toggle="modal" data-bs-target="#productModal1"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Pão Francês</h3>
+<p class="product-desc">Crocante por fora, macio por dentro. Feito na hora!</p>
+<div class="product-price">R$ 0,80</div>
+<button class="btn btn-add-cart" data-name="Pão Francês" data-price="0.80" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 2 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Bolo de Cenoura">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Bolo de Cenoura</h3>
+<p class="product-desc">Com cobertura de chocolate belga e granulado</p>
+<div class="product-price">R$ 35,90</div>
+<button class="btn btn-add-cart" data-name="Bolo de Cenoura" data-price="35.90" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 3 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Croissant">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Croissant</h3>
+<p class="product-desc">Massa folhada e amanteigada, crocante e leve</p>
+<div class="product-price">R$ 7,90</div>
+<button class="btn btn-add-cart" data-name="Croissant" data-price="7.90" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 4 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Torta de Morango">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Torta de Morango</h3>
+<p class="product-desc">Morango fresco com creme de baunilha</p>
+<div class="product-price">R$ 42,90</div>
+<button class="btn btn-add-cart" data-name="Torta de Morango" data-price="42.90" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 5 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Pão de Queijo">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Pão de Queijo</h3>
+<p class="product-desc">Tradicional mineiro, quentinho e saboroso</p>
+<div class="product-price">R$ 1,50</div>
+<button class="btn btn-add-cart" data-name="Pão de Queijo" data-price="1.50" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 6 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Sonho de Valsa">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Sonho</h3>
+<p class="product-desc">Recheado com creme belga e açúcar de confeiteiro</p>
+<div class="product-price">R$ 6,90</div>
+<button class="btn btn-add-cart" data-name="Sonho" data-price="6.90" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 7 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Muffin">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Muffin de Chocolate</h3>
+<p class="product-desc">Fofinho com gotas de chocolate belga</p>
+<div class="product-price">R$ 8,90</div>
+<button class="btn btn-add-cart" data-name="Muffin de Chocolate" data-price="8.90" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+
+<!-- Produto 8 -->
+<div class="col-md-6 col-lg-4 col-xl-3">
+<div class="product-card">
+<div class="product-img">
+<img src="./img/logo.png" alt="Cookie">
+<div class="product-overlay">
+<button class="btn btn-view"><i class="fas fa-eye"></i> Ver Detalhes</button>
+</div>
+</div>
+<div class="product-info">
+<h3>Cookie Americano</h3>
+<p class="product-desc">Gotas de chocolate, crocante por fora</p>
+<div class="product-price">R$ 5,90</div>
+<button class="btn btn-add-cart" data-name="Cookie Americano" data-price="5.90" data-img="./img/logo.png">
+<i class="fas fa-shopping-cart"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SEÇÃO DE PROMOÇÕES -->
+<section id="promocoes" class="promo-section">
+<div class="container">
+<h2 class="section-title text-white">🎁 Ofertas Especiais 🎁</h2>
+<div class="row g-4">
+<div class="col-md-4">
+<div class="promo-card">
+<i class="fas fa-gift"></i>
+<h4>Combo Café da Manhã</h4>
+<p>2 Pães + 1 Bolo + 1 Café Especial</p>
+<div class="old-price">R$ 45,00</div>
+<div class="promo-price">R$ 32,90</div>
+<button class="btn-promo-add" data-name="Combo Café da Manhã" data-price="32.90">
+<i class="fas fa-cart-plus"></i> Aproveitar
+</button>
+</div>
+</div>
+<div class="col-md-4">
+<div class="promo-card">
+<i class="fas fa-birthday-cake"></i>
+<h4>Combo Aniversário</h4>
+<p>1 Bolo Grande + 24 Docinhos + Refri 2L</p>
+<div class="old-price">R$ 89,00</div>
+<div class="promo-price">R$ 69,90</div>
+<button class="btn-promo-add" data-name="Combo Aniversário" data-price="69.90">
+<i class="fas fa-cart-plus"></i> Aproveitar
+</button>
+</div>
+</div>
+<div class="col-md-4">
+<div class="promo-card">
+<i class="fas fa-mug-hot"></i>
+<h4>Combo Lanche da Tarde</h4>
+<p>3 Croissants + 3 Cafés Especiais</p>
+<div class="old-price">R$ 42,00</div>
+<div class="promo-price">R$ 29,90</div>
+<button class="btn-promo-add" data-name="Combo Lanche da Tarde" data-price="29.90">
+<i class="fas fa-cart-plus"></i> Aproveitar
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SEÇÃO SOBRE -->
+<section id="sobre" class="about-section">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 mb-4">
+<div class="about-img">
+<img src="./img/logo.png" alt="Sobre a Padaria" class="img-fluid rounded-4 shadow">
+</div>
+</div>
+<div class="col-lg-6">
+<h2 class="section-title text-start">Sobre Nós</h2>
+<p class="about-text">Há mais de 20 anos, a <strong>Padaria Sabor Divino</strong> vem adoçando e aquecendo os corações dos nossos clientes com pães, bolos e doces feitos com muito amor e receitas tradicionais.</p>
+<p class="about-text">Utilizamos apenas ingredientes selecionados, sem conservantes artificiais, para garantir o sabor único que você conhece e ama.</p>
+<div class="about-stats">
+<div class="stat-item">
+<span class="stat-number">20+</span>
+<span class="stat-label">Anos de História</span>
+</div>
+<div class="stat-item">
+<span class="stat-number">50k+</span>
+<span class="stat-label">Clientes Felizes</span>
+</div>
+<div class="stat-item">
+<span class="stat-number">100+</span>
+<span class="stat-label">Produtos</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SEÇÃO CONTATO -->
+<section id="contato" class="contact-section">
+<div class="container">
+<h2 class="section-title">📞 Contato e Localização 📍</h2>
+<div class="row g-4">
+<div class="col-md-5">
+<div class="contact-info">
+<div class="contact-item">
+<i class="fas fa-map-marker-alt"></i>
+<div>
+<h5>Endereço</h5>
+<p>Rua dos Padeiros, 456 - Centro, São Paulo - SP</p>
+</div>
+</div>
+<div class="contact-item">
+<i class="fas fa-phone-alt"></i>
+<div>
+<h5>Telefone</h5>
+<p>(11) 98765-4321</p>
+<p>(11) 3456-7890</p>
+</div>
+</div>
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<div>
+<h5>Email</h5>
+<p>contato@sabordivinopadaria.com.br</p>
+</div>
+</div>
+<div class="contact-item">
+<i class="fas fa-clock"></i>
+<div>
+<h5>Funcionamento</h5>
+<p>Segunda a Domingo: 06h às 22h</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-7">
+<div class="contact-form">
+<h4>Envie uma mensagem</h4>
+<form id="contactForm">
+<div class="row">
+<div class="col-md-6 mb-3">
+<input type="text" class="form-control" placeholder="Seu nome" required>
+</div>
+<div class="col-md-6 mb-3">
+<input type="email" class="form-control" placeholder="Seu e-mail" required>
+</div>
+<div class="col-12 mb-3">
+<input type="text" class="form-control" placeholder="Assunto">
+</div>
+<div class="col-12 mb-3">
+<textarea class="form-control" rows="4" placeholder="Sua mensagem" required></textarea>
+</div>
+<div class="col-12">
+<button type="submit" class="btn-send">Enviar Mensagem <i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+<div class="container text-center">
+<h3>📧 Receba Nossas Novidades</h3>
+<p>Cadastre-se e ganhe 10% OFF na primeira compra!</p>
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="input-group">
+<input type="email" class="form-control" placeholder="Seu melhor e-mail" id="newsletterEmail">
+<button class="btn-newsletter" id="newsletterBtn">Assinar</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SIDEBAR DO CARRINHO (LATERAL) -->
+<div id="cartSidebar" class="cart-sidebar">
+<div class="cart-sidebar-header">
+<h4><i class="fas fa-shopping-cart"></i> Meu Carrinho</h4>
+<button class="close-sidebar" id="closeSidebarBtn">&times;</button>
+</div>
+<div class="cart-sidebar-body" id="cartItemsList">
+<div class="empty-cart">
+<i class="fas fa-shopping-basket"></i>
+<p>Seu carrinho está vazio</p>
+<small>Adicione produtos clicando em "Adicionar"</small>
+</div>
+</div>
+<div class="cart-sidebar-footer">
+<div class="cart-total">
+<span>Total:</span>
+<span id="sidebarCartTotal">R$ 0,00</span>
+</div>
+<button class="btn-checkout" id="checkoutBtn">
+<i class="fas fa-check-circle"></i> Finalizar Pedido
+</button>
+<button class="btn-clear" id="clearCartBtn">
+<i class="fas fa-trash-alt"></i> Limpar Carrinho
+</button>
+</div>
+</div>
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<div class="row">
+<div class="col-md-4 mb-4">
+<h5><img src="./img/logo.png" alt="Logo" height="35"> Sabor Divino</h5>
+<p>A padaria que adoça sua vida com produtos de qualidade e muito amor.</p>
+</div>
+<div class="col-md-4 mb-4">
+<h5>Links Rápidos</h5>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#produtos">Produtos</a></li>
+<li><a href="#promocoes">Promoções</a></li>
+<li><a href="#sobre">Sobre</a></li>
+<li><a href="#contato">Contato</a></li>
+</ul>
+</div>
+<div class="col-md-4 mb-4">
+<h5>Redes Sociais</h5>
+<div class="social-links">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-whatsapp"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+</div>
+<hr>
+<div class="text-center">
+<p>&copy; 2024 Sabor Divino Padaria - Todos os direitos reservados.</p>
+</div>
+</div>
+</footer>
+
+<!-- OVERLAY DE CARREGAMENTO -->
+<div id="loadingOverlay" class="loading-overlay">
+<div class="spinner"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/script.js"></script>
+
+<!-- ESTILOS ADICIONAIS PARA O CARRINHO LATERAL -->
+<style>
+/* Sidebar Carrinho */
+.cart-sidebar {
+position: fixed;
+top: 0;
+right: -450px;
+width: 450px;
+height: 100%;
+background: white;
+box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+z-index: 10000;
+transition: right 0.3s ease;
+display: flex;
+flex-direction: column;
+}
+.cart-sidebar.open {
+right: 0;
+}
+.sidebar-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.5);
+z-index: 9999;
+display: none;
+}
+.sidebar-overlay.active {
+display: block;
+}
+.cart-sidebar-header {
+background: linear-gradient(135deg, #8B4513, #D2691E);
+color: white;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.close-sidebar {
+background: none;
+border: none;
+color: white;
+font-size: 28px;
+cursor: pointer;
+transition: transform 0.3s;
+}
+.close-sidebar:hover { transform: scale(1.2); }
+.cart-sidebar-body {
+flex: 1;
+overflow-y: auto;
+padding: 20px;
+}
+.empty-cart { text-align: center; padding: 40px; color: #999; }
+.empty-cart i { font-size: 4rem; margin-bottom: 15px; }
+.cart-item {
+display: flex;
+gap: 15px;
+padding: 15px;
+border-bottom: 1px solid #eee;
+margin-bottom: 10px;
+}
+.cart-item-img { width: 70px; height: 70px; object-fit: cover; border-radius: 10px; }
+.cart-item-info { flex: 1; }
+.cart-item-info h5 { margin: 0 0 5px; font-size: 1rem; }
+.cart-item-price { color: #D2691E; font-weight: bold; }
+.cart-item-quantity {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-top: 10px;
+}
+.quantity-btn {
+width: 30px;
+height: 30px;
+border: 1px solid #ddd;
+background: white;
+border-radius: 50%;
+cursor: pointer;
+transition: all 0.3s;
+}
+.quantity-btn:hover { background: #D2691E; color: white; border-color: #D2691E; }
+.cart-item-remove {
+background: none;
+border: none;
+color: #dc3545;
+cursor: pointer;
+font-size: 1.2rem;
+}
+.cart-sidebar-footer {
+padding: 20px;
+border-top: 1px solid #eee;
+background: #f9f9f9;
+}
+.cart-total {
+display: flex;
+justify-content: space-between;
+font-size: 1.2rem;
+font-weight: bold;
+margin-bottom: 15px;
+}
+.btn-checkout {
+width: 100%;
+background: linear-gradient(135deg, #28a745, #20c997);
+border: none;
+padding: 12px;
+color: white;
+font-weight: bold;
+border-radius: 10px;
+margin-bottom: 10px;
+transition: all 0.3s;
+}
+.btn-checkout:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(40,167,69,0.3); }
+.btn-clear {
+width: 100%;
+background: #dc3545;
+border: none;
+padding: 12px;
+color: white;
+font-weight: bold;
+border-radius: 10px;
+transition: all 0.3s;
+}
+.btn-clear:hover { transform: translateY(-2px); }
+.loading-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(255,255,255,0.9);
+z-index: 20000;
+display: none;
+justify-content: center;
+align-items: center;
+}
+.loading-overlay.active { display: flex; }
+.spinner {
+width: 50px;
+height: 50px;
+border: 5px solid #f3f3f3;
+border-top: 5px solid #D2691E;
+border-radius: 50%;
+animation: spin 1s linear infinite;
+}
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+@media (max-width: 768px) {
+.cart-sidebar { width: 100%; right: -100%; }
+}
+</style>
+</body>
+</html>
