@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | PetShop Plus+</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .register-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .register-container {
+            max-width: 520px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+        .register-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 35px 30px;
+            text-align: center;
+            color: white;
+        }
+        .register-header img {
+            width: 65px;
+            margin-bottom: 15px;
+        }
+        .register-header h2 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+        .register-header p {
+            opacity: 0.8;
+            font-size: 13px;
+        }
+        .register-body {
+            padding: 35px 30px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .input-group-reg {
+            margin-bottom: 18px;
+            position: relative;
+        }
+        .input-group-reg label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #2d2d2d;
+            font-size: 13px;
+        }
+        .input-group-reg i {
+            position: absolute;
+            left: 14px;
+            bottom: 14px;
+            color: #aaa;
+            font-size: 14px;
+        }
+        .input-group-reg input, 
+        .input-group-reg select {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .input-group-reg input:focus,
+        .input-group-reg select:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+        }
+        .password-strength {
+            margin-top: 5px;
+            font-size: 11px;
+        }
+        .strength-bar {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 6px;
+            transition: all 0.3s;
+        }
+        .strength-bar-weak { width: 33%; background: #dc2626; }
+        .strength-bar-medium { width: 66%; background: #f59e0b; }
+        .strength-bar-strong { width: 100%; background: #10b981; }
+        .terms-check {
+            margin: 20px 0;
+        }
+        .terms-check label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .terms-check a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255,107,53,0.4);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+        .login-link a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .error-msg {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            display: none;
+        }
+        .success-msg {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            display: none;
+        }
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .register-body {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="register-page">
+    <div class="register-container" data-aos="fade-up">
+        <div class="register-header">
+            <img src="img/logo.png" alt="PetShop Plus+">
+            <h2>Crie sua conta 🐾</h2>
+            <p>Cadastre-se e ganhe 10% OFF na primeira compra</p>
+        </div>
+        <div class="register-body">
+            <div id="reg-error" class="error-msg"></div>
+            <div id="reg-success" class="success-msg"></div>
+            
+            <form id="register-form">
+                <div class="form-row">
+                    <div class="input-group-reg">
+                        <label>Nome completo</label>
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="reg-name" placeholder="Digite seu nome" required>
+                    </div>
+                    <div class="input-group-reg">
+                        <label>CPF</label>
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="reg-cpf" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                </div>
+                
+                <div class="input-group-reg">
+                    <label>E-mail</label>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="reg-email" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group-reg">
+                        <label>Telefone</label>
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="reg-phone" placeholder="(11) 99999-9999">
+                    </div>
+                    <div class="input-group-reg">
+                        <label>Data de Nascimento</label>
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" id="reg-birth">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group-reg">
+                        <label>Senha</label>
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required>
+                        <div class="password-strength">
+                            <div class="strength-bar" id="strength-bar"></div>
+                        </div>
+                    </div>
+                    <div class="input-group-reg">
+                        <label>Confirmar senha</label>
+                        <i class="fas fa-check-circle"></i>
+                        <input type="password" id="reg-confirm" placeholder="Digite novamente" required>
+                    </div>
+                </div>
+                
+                <div class="terms-check">
+                    <label>
+                        <input type="checkbox" id="terms" required>
+                        Li e aceito os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus"></i> Criar conta grátis
+                </button>
+            </form>
+            
+            <div class="login-link">
+                Já tem uma conta? <a href="login.html">Faça login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+    if(typeof AOS !== 'undefined') AOS.init({ duration: 1000 });
+    
+    // Máscara CPF
+    document.getElementById('reg-cpf').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if(value.length <= 11) {
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = value;
+        }
+    });
+    
+    // Máscara Telefone
+    document.getElementById('reg-phone').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if(value.length <= 11) {
+            if(value.length <= 2) value = value.replace(/(\d{2})/, '($1');
+            else if(value.length <= 6) value = value.replace(/(\d{2})(\d)/, '($1) $2');
+            else if(value.length <= 10) value = value.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+            else value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            e.target.value = value;
+        }
+    });
+    
+    // Força da senha
+    const passwordInput = document.getElementById('reg-password');
+    const strengthBar = document.getElementById('strength-bar');
+    
+    passwordInput.addEventListener('input', function() {
+        const val = this.value;
+        let strength = 0;
+        if(val.length >= 6) strength++;
+        if(val.match(/[a-z]/) && val.match(/[A-Z]/)) strength++;
+        if(val.match(/[0-9]/)) strength++;
+        if(val.match(/[^a-zA-Z0-9]/)) strength++;
+        
+        strengthBar.className = 'strength-bar';
+        if(val.length === 0) {
+            strengthBar.style.width = '0%';
+            strengthBar.style.background = '#e0e0e0';
+        } else if(strength <= 1) {
+            strengthBar.classList.add('strength-bar-weak');
+        } else if(strength <= 2) {
+            strengthBar.classList.add('strength-bar-medium');
+        } else {
+            strengthBar.classList.add('strength-bar-strong');
+        }
+    });
+    
+    // Register form handler
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('reg-name').value;
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-password').value;
+        const confirm = document.getElementById('reg-confirm').value;
+        const terms = document.getElementById('terms').checked;
+        const cpf = document.getElementById('reg-cpf').value;
+        const phone = document.getElementById('reg-phone').value;
+        const birth = document.getElementById('reg-birth').value;
+        
+        const errorDiv = document.getElementById('reg-error');
+        const successDiv = document.getElementById('reg-success');
+        
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+        
+        // Validações
+        if(!name || !email || !password) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Preencha todos os campos obrigatórios!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        if(password.length < 6) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> A senha deve ter no mínimo 6 caracteres!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        if(password !== confirm) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> As senhas não coincidem!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        if(!terms) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Você precisa aceitar os Termos de Uso!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        // Verificar se e-mail já existe
+        const users = JSON.parse(localStorage.getItem('petshop_users')) || [];
+        if(users.some(u => u.email === email)) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Este e-mail já está cadastrado!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        // Criar novo usuário
+        const newUser = {
+            id: Date.now(),
+            name: name,
+            email: email,
+            password: password,
+            cpf: cpf,
+            phone: phone,
+            birth: birth,
+            created_at: new Date().toISOString(),
+            status: 'active',
+            points: 0,
+            orders: []
+        };
+        
+        users.push(newUser);
+        localStorage.setItem('petshop_users', JSON.stringify(users));
+        
+        // Automatically login
+        localStorage.setItem('user_logged', 'true');
+        localStorage.setItem('user_name', name);
+        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_is_admin', 'false');
+        
+        successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Cadastro realizado com sucesso! Redirecionando...';
+        successDiv.style.display = 'block';
+        
+        // Adicionar cupom de boas-vindas
+        const welcomeCoupon = {
+            code: `BEMVINDO${Math.floor(Math.random() * 10000)}`,
+            discount: 10,
+            type: 'percent',
+            user_email: email,
+            used: false,
+            expires: new Date(Date.now() + 30*24*60*60*1000).toISOString()
+        };
+        const coupons = JSON.parse(localStorage.getItem('petshop_coupons')) || [];
+        coupons.push(welcomeCoupon);
+        localStorage.setItem('petshop_coupons', JSON.stringify(coupons));
+        
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | PetShop Plus+</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .login-container {
+            max-width: 480px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+        .login-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        .login-header img {
+            width: 70px;
+            margin-bottom: 20px;
+        }
+        .login-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .login-header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        .login-body {
+            padding: 40px 30px;
+        }
+        .input-group-login {
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .input-group-login label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d2d2d;
+        }
+        .input-group-login i {
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+            color: #aaa;
+        }
+        .input-group-login input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .input-group-login input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+        }
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .forgot-password {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255,107,53,0.4);
+        }
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .social-login p {
+            color: #666;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        .social-login p::before { left: 0; }
+        .social-login p::after { right: 0; }
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 22px;
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+        .social-btn.google:hover { background: #db4437; color: white; }
+        .social-btn.facebook:hover { background: #4267B2; color: white; }
+        .social-btn.apple:hover { background: #000; color: white; }
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .register-link a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            display: none;
+        }
+        .success-message {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="login-page">
+    <div class="login-container" data-aos="fade-up">
+        <div class="login-header">
+            <img src="img/logo.png" alt="PetShop Plus+">
+            <h2>Bem-vindo de volta! 🐾</h2>
+            <p>Faça login para continuar suas compras</p>
+        </div>
+        <div class="login-body">
+            <div id="login-error" class="error-message"></div>
+            <div id="login-success" class="success-message"></div>
+            
+            <form id="login-form">
+                <div class="input-group-login">
+                    <label>E-mail</label>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="login-email" placeholder="seu@email.com" required>
+                </div>
+                <div class="input-group-login">
+                    <label>Senha</label>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <div class="login-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="remember-me"> Lembrar-me
+                    </label>
+                    <a href="#" class="forgot-password" id="forgot-password">Esqueceu a senha?</a>
+                </div>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-arrow-right-to-bracket"></i> Entrar
+                </button>
+            </form>
+            
+            <div class="social-login">
+                <p>Ou continue com</p>
+                <div class="social-buttons">
+                    <a href="#" class="social-btn google" onclick="socialLogin('google')">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-btn facebook" onclick="socialLogin('facebook')">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-btn apple" onclick="socialLogin('apple')">
+                        <i class="fab fa-apple"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="register-link">
+                Não tem uma conta? <a href="cadastro.html">Cadastre-se grátis</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+    // AOS para animação
+    if(typeof AOS !== 'undefined') {
+        AOS.init({ duration: 1000 });
+    }
+    
+    // Verificar se já está logado
+    if(localStorage.getItem('user_logged') === 'true') {
+        window.location.href = 'index.html';
+    }
+    
+    // Preencher com último e-mail se existir
+    const savedEmail = localStorage.getItem('remember_email');
+    if(savedEmail) {
+        document.getElementById('login-email').value = savedEmail;
+        document.getElementById('remember-me').checked = true;
+    }
+    
+    // Login form handler
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const remember = document.getElementById('remember-me').checked;
+        
+        const errorDiv = document.getElementById('login-error');
+        const successDiv = document.getElementById('login-success');
+        
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+        
+        // Validação básica
+        if(!email || !password) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Preencha todos os campos!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        if(!email.includes('@')) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> E-mail inválido!';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        // Simular login (integração com localStorage)
+        const users = JSON.parse(localStorage.getItem('petshop_users')) || [];
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if(user || (email === 'admin@petshop.com' && password === 'admin123')) {
+            // Login bem sucedido
+            const userName = user ? user.name : 'Administrador';
+            const userEmail = email;
+            
+            localStorage.setItem('user_logged', 'true');
+            localStorage.setItem('user_name', userName);
+            localStorage.setItem('user_email', userEmail);
+            localStorage.setItem('user_is_admin', email === 'admin@petshop.com' ? 'true' : 'false');
+            
+            if(remember) {
+                localStorage.setItem('remember_email', email);
+            } else {
+                localStorage.removeItem('remember_email');
+            }
+            
+            successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Login realizado! Redirecionando...';
+            successDiv.style.display = 'block';
+            
+            // Registrar timestamp do login
+            const loginHistory = JSON.parse(localStorage.getItem('login_history')) || [];
+            loginHistory.push({
+                email: userEmail,
+                timestamp: new Date().toISOString(),
+                ip: '192.168.1.1'
+            });
+            localStorage.setItem('login_history', JSON.stringify(loginHistory.slice(-20)));
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        } else {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> E-mail ou senha incorretos!';
+            errorDiv.style.display = 'block';
+            
+            // Registrar tentativa de login falha
+            const failedAttempts = JSON.parse(localStorage.getItem('failed_logins')) || [];
+            failedAttempts.push({
+                email: email,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('failed_logins', JSON.stringify(failedAttempts.slice(-50)));
+        }
+    });
+    
+    // Esqueceu a senha
+    document.getElementById('forgot-password').addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        if(email && email.includes('@')) {
+            alert(`Um link de recuperação foi enviado para ${email}\n\n(Demo: use "admin@petshop.com" / "admin123" para teste)`);
+        } else {
+            alert('Digite seu e-mail para recuperar a senha');
+        }
+    });
+    
+    function socialLogin(provider) {
+        alert(`Login com ${provider} em desenvolvimento\n\nVocê será redirecionado em breve.`);
+        // Aqui iria integração com OAuth real
+    }
+</script>
+</body>
+</html>

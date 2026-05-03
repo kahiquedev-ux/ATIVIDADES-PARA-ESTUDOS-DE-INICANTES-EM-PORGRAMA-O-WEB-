@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>PetShop Plus+ | O melhor para seu pet</title>
+    <meta name="description" content="PetShop completo com rações, brinquedos, acessórios e muito mais. Frete grátis para toda região!">
+    <meta name="keywords" content="petshop, ração, brinquedos para pets, acessórios para cães e gatos">
+    <meta name="author" content="PetShop Plus+">
+    <link rel="icon" type="image/png" href="img/logo.png">
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google Fonts Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (ícones profissionais) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animação Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper Carrossel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        /* Estilos complementares inline para carregamento rápido */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e8f3e, #ff6b35);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s;
+        }
+        .preloader.loaded {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid white;
+            border-top: 8px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+    <div class="loader"></div>
+</div>
+
+<!-- ========== TOPO SUPERIOR (BARRA PRETA) ========== -->
+<div class="top-bar-super">
+    <div class="container">
+        <div class="top-left">
+            <i class="fas fa-truck-fast"></i> Frete Grátis acima de R$199
+            <span class="separator">|</span>
+            <i class="fas fa-store"></i> Retire na Loja
+            <span class="separator">|</span>
+            <i class="fas fa-headset"></i> Suporte 24/7
+        </div>
+        <div class="top-right">
+            <a href="tel:1133334444"><i class="fas fa-phone"></i> (11) 3333-4444</a>
+            <a href="https://wa.me/5511999999999" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <div class="language-selector">
+                <i class="fas fa-globe"></i> PT <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== HEADER PRINCIPAL ========== -->
+<header class="main-header">
+    <div class="container">
+        <div class="logo-area" data-aos="fade-right">
+            <img src="img/logo.png" alt="PetShop Plus+ Logo" class="main-logo">
+            <div class="logo-text">
+                <h1>PetShop <span>Plus+</span></h1>
+                <p>Seu amigo merece o melhor</p>
+            </div>
+        </div>
+        
+        <div class="search-area" data-aos="fade-up">
+            <form id="search-form" onsubmit="event.preventDefault(); buscarProdutosGlobal();">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="global-search" placeholder="Busque por ração, brinquedos, acessórios..." autocomplete="off">
+                    <button type="submit" class="search-btn">Buscar</button>
+                </div>
+                <div id="search-suggestions" class="search-suggestions"></div>
+            </form>
+        </div>
+        
+        <div class="header-actions" data-aos="fade-left">
+            <a href="login.html" class="action-link">
+                <i class="fas fa-user-circle"></i>
+                <span>Minha Conta</span>
+            </a>
+            <a href="#" class="action-link" id="favoritos-link">
+                <i class="fas fa-heart"></i>
+                <span>Favoritos</span>
+                <span class="badge" id="favoritos-count">0</span>
+            </a>
+            <div class="cart-wrapper" id="cart-wrapper">
+                <button class="cart-trigger" id="cart-trigger">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Carrinho</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+                <!-- Mini cart dropdown -->
+                <div class="cart-dropdown" id="cart-dropdown">
+                    <div class="cart-dropdown-header">
+                        <h4>Meu Carrinho</h4>
+                        <button class="close-cart-dropdown"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="cart-dropdown-items" id="cart-dropdown-items">
+                        <p class="empty-cart-msg">Seu carrinho está vazio</p>
+                    </div>
+                    <div class="cart-dropdown-footer">
+                        <div class="cart-subtotal">
+                            <span>Subtotal:</span>
+                            <strong id="dropdown-subtotal">R$ 0,00</strong>
+                        </div>
+                        <a href="carrinho.html" class="btn-view-cart">Ver Carrinho</a>
+                        <button class="btn-checkout" onclick="finalizarCompra()">Finalizar Compra</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ========== NAVEGAÇÃO MEGA MENU ========== -->
+<nav class="mega-nav">
+    <div class="container">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#"><i class="fas fa-dog"></i> Cachorros <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content mega-dropdown">
+                    <div class="mega-row">
+                        <div class="mega-col">
+                            <h4>Alimentação</h4>
+                            <a href="#">Ração Seca</a>
+                            <a href="#">Ração Úmida</a>
+                            <a href="#">Petiscos</a>
+                            <a href="#">Suplementos</a>
+                        </div>
+                        <div class="mega-col">
+                            <h4>Brinquedos</h4>
+                            <a href="#">Mordedores</a>
+                            <a href="#">Bolas</a>
+                            <a href="#">Cordas</a>
+                            <a href="#">Inteligentes</a>
+                        </div>
+                        <div class="mega-col">
+                            <h4>Higiene</h4>
+                            <a href="#">Shampoos</a>
+                            <a href="#">Escovas</a>
+                            <a href="#">Cortadores de Unha</a>
+                            <a href="#">Limpeza Dental</a>
+                        </div>
+                        <div class="mega-col">
+                            <h4>Acessórios</h4>
+                            <a href="#">Coleiras</a>
+                            <a href="#">Guias</a>
+                            <a href="#">Roupas</a>
+                            <a href="#">Camas</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#"><i class="fas fa-cat"></i> Gatos <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content mega-dropdown">
+                    <div class="mega-row">
+                        <div class="mega-col">
+                            <h4>Alimentação</h4>
+                            <a href="#">Ração Premium</a>
+                            <a href="#">Sachês</a>
+                            <a href="#">Petiscos</a>
+                            <a href="#">Erva de Gato</a>
+                        </div>
+                        <div class="mega-col">
+                            <h4>Brinquedos</h4>
+                            <a href="#">Varinhas</a>
+                            <a href="#">Ratinhos</a>
+                            <a href="#">Arranhadores</a>
+                            <a href="#">Túneis</a>
+                        </div>
+                        <div class="mega-col">
+                            <h4>Areia e Banheiro</h4>
+                            <a href="#">Areia Sanitária</a>
+                            <a href="#">Caixas de Areia</a>
+                            <a href="#">Pás Coletoras</a>
+                            <a href="#">Tapetes Higiênicos</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item"><a href="#"><i class="fas fa-fish"></i> Peixes</a></li>
+            <li class="nav-item"><a href="#"><i class="fas fa-dove"></i> Pássaros</a></li>
+            <li class="nav-item"><a href="#"><i class="fas fa-paw"></i> Roedores</a></li>
+            <li class="nav-item"><a href="produtos.html"><i class="fas fa-store"></i> Todos Produtos</a></li>
+            <li class="nav-item"><a href="#"><i class="fas fa-percent"></i> Ofertas</a></li>
+            <li class="nav-item"><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+            <li class="nav-item"><a href="admin.html"><i class="fas fa-crown"></i> Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ========== CARROSSEL PRINCIPAL (SWIPER) ========== -->
+<section class="hero-slider">
+    <div class="swiper heroSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="img/banner.png" alt="Banner Promoção">
+                <div class="slide-content">
+                    <h2 data-aos="fade-up">Promoção Especial</h2>
+                    <p data-aos="fade-up" data-aos-delay="100">Até 40% OFF em rações premium</p>
+                    <button class="btn-slide" onclick="location.href='produtos.html'">Comprar Agora</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img/banner.png" alt="Banner Brinquedos">
+                <div class="slide-content">
+                    <h2>Brinquedos Divertidos</h2>
+                    <p>Leve 3 pague 2 em toda linha</p>
+                    <button class="btn-slide">Ver Ofertas</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img/banner.png" alt="Banner Higiene">
+                <div class="slide-content">
+                    <h2>Higiene e Saúde</h2>
+                    <p>Kit banho completo com 30% OFF</p>
+                    <button class="btn-slide">Comprar Kit</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img/banner.png" alt="Banner Acessórios">
+                <div class="slide-content">
+                    <h2>Acessórios Exclusivos</h2>
+                    <p>Coleiras e guias com design premium</p>
+                    <button class="btn-slide">Conferir</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img/banner.png" alt="Banner Frete Grátis">
+                <div class="slide-content">
+                    <h2>Frete Grátis!</h2>
+                    <p>Para toda região Sul e Sudeste</p>
+                    <button class="btn-slide">Saiba Mais</button>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</section>
+
+<!-- ========== CATEGORIAS DESTAQUE ========== -->
+<section class="featured-categories">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Categorias em Destaque</h2>
+        <div class="categories-grid">
+            <div class="category-card" data-aos="flip-left" data-aos-delay="0">
+                <div class="category-icon"><i class="fas fa-bone"></i></div>
+                <h3>Racões Premium</h3>
+                <p>+100 opções</p>
+                <a href="#" class="category-link">Ver tudo →</a>
+            </div>
+            <div class="category-card" data-aos="flip-left" data-aos-delay="100">
+                <div class="category-icon"><i class="fas fa-baseball-ball"></i></div>
+                <h3>Brinquedos</h3>
+                <p>Diversão garantida</p>
+                <a href="#" class="category-link">Ver tudo →</a>
+            </div>
+            <div class="category-card" data-aos="flip-left" data-aos-delay="200">
+                <div class="category-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3>Higiene & Saúde</h3>
+                <p>Cuidados especiais</p>
+                <a href="#" class="category-link">Ver tudo →</a>
+            </div>
+            <div class="category-card" data-aos="flip-left" data-aos-delay="300">
+                <div class="category-icon"><i class="fas fa-tshirt"></i></div>
+                <h3>Acessórios</h3>
+                <p>Estilo e conforto</p>
+                <a href="#" class="category-link">Ver tudo →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== PRODUTOS EM DESTAQUE ========== -->
+<section class="products-featured">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">🔥 Produtos Mais Vendidos</h2>
+            <a href="produtos.html" class="view-all">Ver todos <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="products-grid" id="destaque-grid" data-aos="fade-up">
+            <!-- Produtos serão inseridos via JS -->
+        </div>
+    </div>
+</section>
+
+<!-- ========== BANNER INTERMEDIÁRIO PROMO ========== -->
+<section class="promo-banner">
+    <div class="container">
+        <div class="promo-content" data-aos="zoom-in">
+            <h3>Super Oferta Relâmpago</h3>
+            <p>30% OFF em todo site usando o cupom <strong>PETLOVER30</strong></p>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item"><span id="hours">00</span>horas</div>
+                <div class="countdown-item"><span id="minutes">00</span>min</div>
+                <div class="countdown-item"><span id="seconds">00</span>seg</div>
+            </div>
+            <button class="btn-promo" onclick="location.href='produtos.html'">Aproveitar Oferta →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ========== DEPOIMENTOS DE CLIENTES ========== -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">O que nossos clientes dizem</h2>
+        <div class="swiper testimonialsSwiper" data-aos="fade-up">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p>"Melhor petshop online que já comprei! Entrega super rápida e produtos de qualidade. Meu pet ama as rações daqui!"</p>
+                        <div class="testimonial-author">
+                            <img src="img/outros.png" alt="Cliente">
+                            <div>
+                                <strong>Ana Silva</strong>
+                                <span>Cliente desde 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p>"Atendimento excepcional! Tive um problema com meu pedido e resolveram em minutos. Super recomendo!"</p>
+                        <div class="testimonial-author">
+                            <img src="img/outros.png" alt="Cliente">
+                            <div>
+                                <strong>Carlos Oliveira</strong>
+                                <span>Cliente VIP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p>"Os brinquedos são de excelente qualidade e os preços são justos. Meu cachorro adora tudo que compro aqui!"</p>
+                        <div class="testimonial-author">
+                            <img src="img/outros.png" alt="Cliente">
+                            <div>
+                                <strong>Mariana Santos</strong>
+                                <span>+50 compras</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p>"Frete grátis chegou em 2 dias! Produtos bem embalados e com garantia. Nota 1000!"</p>
+                        <div class="testimonial-author">
+                            <img src="img/outros.png" alt="Cliente">
+                            <div>
+                                <strong>Rafael Lima</strong>
+                                <span>Cliente Top</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== NEWSLETTER PROFISSIONAL ========== -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-wrapper" data-aos="fade-up">
+            <div class="newsletter-icon">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <div class="newsletter-content">
+                <h3>Receba ofertas exclusivas!</h3>
+                <p>Cadastre-se e ganhe 10% OFF na primeira compra + frete grátis</p>
+                <form id="newsletter-form" class="newsletter-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Seu nome" id="news-name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Seu melhor e-mail" id="news-email" required>
+                    </div>
+                    <button type="submit" class="btn-newsletter">
+                        <i class="fas fa-paper-plane"></i> Quero Ofertas!
+                    </button>
+                </form>
+                <p class="newsletter-note"><i class="fas fa-lock"></i> Seu e-mail está seguro, não enviamos spam</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== RODAPÉ COMPLETO (FOOTER) ========== -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col" data-aos="fade-up">
+                <div class="footer-logo">
+                    <img src="img/logo.png" alt="Logo">
+                    <h4>PetShop <span>Plus+</span></h4>
+                </div>
+                <p>Seu pet merece o melhor, e a gente cuida disso com muito amor e dedicação. Mais de 50 mil clientes satisfeitos!</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="#">Quem Somos</a></li>
+                    <li><a href="#">Nossas Lojas</a></li>
+                    <li><a href="#">Trabalhe Conosco</a></li>
+                    <li><a href="#">Blog Pet</a></li>
+                    <li><a href="#">Seja um Afiliado</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+                <h4>Ajuda</h4>
+                <ul>
+                    <li><a href="#">Central de Atendimento</a></li>
+                    <li><a href="#">Perguntas Frequentes</a></li>
+                    <li><a href="#">Trocas e Devoluções</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
+                <h4>Atendimento</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-phone-alt"></i> (11) 3333-4444</li>
+                    <li><i class="fab fa-whatsapp"></i> (11) 99999-9999</li>
+                    <li><i class="fas fa-envelope"></i> contato@petshopplus.com.br</li>
+                    <li><i class="fas fa-clock"></i> Seg-Sex: 8h-22h | Sáb: 9h-18h</li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="400">
+                <h4>Formas de Pagamento</h4>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-pix"></i>
+                    <span>PIX</span>
+                    <span>Boleto</span>
+                </div>
+                <div class="security-badges">
+                    <i class="fas fa-shield-alt"></i> Compra Segura
+                    <i class="fas fa-lock"></i> SSL Certificado
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PetShop Plus+ - Todos os direitos reservados. CNPJ: 12.345.678/0001-90</p>
+            <div class="footer-links">
+                <a href="#">Mapa do Site</a>
+                <a href="#">Acessibilidade</a>
+                <a href="#">LGPD</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Botão Voltar ao Topo -->
+<button id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="js/script.js"></script>
+
+<script>
+    // Preloader
+    window.addEventListener('load', () => {
+        document.getElementById('preloader').classList.add('loaded');
+        setTimeout(() => {
+            document.getElementById('preloader').style.display = 'none';
+        }, 500);
+    });
+    
+    // AOS Init
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+    
+    // Hero Swiper
+    const heroSwiper = new Swiper('.heroSwiper', {
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        }
+    });
+    
+    // Testimonials Swiper
+    const testimonialsSwiper = new Swiper('.testimonialsSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 4000,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+        }
+    });
+    
+    // Countdown Timer (24h)
+    function startCountdown() {
+        const targetTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetTime - now;
+            
+            if(diff <= 0) {
+                document.getElementById('countdown').innerHTML = '<span>Oferta Encerrada!</span>';
+                return;
+            }
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (3600000)) / (1000 * 60));
+            const seconds = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }, 1000);
+    }
+    
+    startCountdown();
+    
+    // Back to top button
+    const backBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 300) {
+            backBtn.classList.add('show');
+        } else {
+            backBtn.classList.remove('show');
+        }
+    });
+    
+    backBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Cart dropdown toggle
+    document.getElementById('cart-trigger').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('cart-dropdown').classList.toggle('show');
+    });
+    
+    document.querySelector('.close-cart-dropdown').addEventListener('click', () => {
+        document.getElementById('cart-dropdown').classList.remove('show');
+    });
+    
+    // Fechar dropdown ao clicar fora
+    window.addEventListener('click', (e) => {
+        const wrapper = document.getElementById('cart-wrapper');
+        if(!wrapper.contains(e.target)) {
+            document.getElementById('cart-dropdown').classList.remove('show');
+        }
+    });
+    
+    // Newsletter
+    document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = document.getElementById('news-name').value;
+        const email = document.getElementById('news-email').value;
+        
+        if(nome && email) {
+            alert(`Obrigado ${nome}! Seu cupom de 10% OFF foi enviado para ${email}`);
+            localStorage.setItem('newsletter_email', email);
+            document.getElementById('newsletter-form').reset();
+        }
+    });
+</script>
+</body>
+</html>
