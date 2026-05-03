@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>IronFit Academia | Treino e Evolução</title>
+    <!-- Google Fonts & Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAVEGAÇÃO MODERNA -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <div class="logo-area">
+                <img src="img/logo.png" alt="IronFit Logo" class="logo-img" id="mainLogo">
+                <span class="logo-text">IronFit</span>
+            </div>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="admin.html" class="nav-link">Admin</a>
+                <a href="cadastro.html" class="nav-link">Cadastro</a>
+                <a href="#planos" class="nav-link">Planos</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </nav>
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO COM CARROSSEL (5 imagens "outros.png") -->
+    <section class="hero-carousel" id="heroCarousel">
+        <div class="carousel-slides" id="carouselSlides">
+            <div class="carousel-item active">
+                <img src="img/outros.png" alt="Treino intenso">
+                <div class="carousel-caption">
+                    <h1>TRANSFORMAÇÃO COMEÇA AQUI</h1>
+                    <p>Estrutura completa, profissionais qualificados e energia que move</p>
+                    <a href="cadastro.html" class="btn-primary">ASSINE AGORA <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/outros.png" alt="Musculação moderna">
+                <div class="carousel-caption">
+                    <h1>EQUIPAMENTOS DE ÚLTIMA GERAÇÃO</h1>
+                    <p>Tecnologia e conforto para o seu treino render mais</p>
+                    <a href="cadastro.html" class="btn-primary">EXPERIMENTE GRÁTIS</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/outros.png" alt="Aulas coletivas">
+                <div class="carousel-caption">
+                    <h1>AULAS ENERGIZANTES</h1>
+                    <p>Spinning, Yoga, Jump e muito mais para todos os níveis</p>
+                    <a href="cadastro.html" class="btn-primary">VER HORÁRIOS</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/outros.png" alt="Personal Trainers">
+                <div class="carousel-caption">
+                    <h1>SUPORTE ESPECIALIZADO</h1>
+                    <p>Equipe de personal trainers prontos para te ajudar</p>
+                    <a href="cadastro.html" class="btn-primary">SAIBA MAIS</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/outros.png" alt="Resultados reais">
+                <div class="carousel-caption">
+                    <h1>COMUNIDADE IRONFIT</h1>
+                    <p>Faça parte da maior rede de transformação fitness</p>
+                    <a href="cadastro.html" class="btn-primary">CADASTRE-SE</a>
+                </div>
+            </div>
+        </div>
+        <!-- Controles do carrossel -->
+        <button class="carousel-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="carouselDots"></div>
+    </section>
+
+    <!-- SEÇÃO DE DIFERENCIAIS (animações com JS) -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">Por que IronFit</span>
+                <h2>Onde a força encontra evolução</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-animate="fade-up">
+                    <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3>Equipamentos premium</h3>
+                    <p>Aparelhos de alta performance, manutenção constante e variedade para todos os treinos.</p>
+                </div>
+                <div class="feature-card" data-animate="fade-up">
+                    <div class="feature-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    <h3>Consultoria especializada</h3>
+                    <p>Avaliação física e acompanhamento profissional incluso no plano.</p>
+                </div>
+                <div class="feature-card" data-animate="fade-up">
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Horário estendido</h3>
+                    <p>Funcionamento das 5h às 23h, inclusive finais de semana para sua rotina.</p>
+                </div>
+                <div class="feature-card" data-animate="fade-up">
+                    <div class="feature-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>Resultados reais</h3>
+                    <p>Mais de 2 mil alunos ativos e histórias de superação.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANOS (chamada para ação) -->
+    <section class="plans" id="planos">
+        <div class="container">
+            <div class="section-title">
+                <span class="tag">Planos que cabem no seu bolso</span>
+                <h2>Invista em você</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="plans-grid">
+                <div class="plan-card" data-animate="zoom">
+                    <h3>Plano Mensal</h3>
+                    <div class="price">R$ 99<small>/mês</small></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Acesso total academia</li>
+                        <li><i class="fas fa-check-circle"></i> 1 aula experimental</li>
+                        <li><i class="fas fa-check-circle"></i> App de treino</li>
+                    </ul>
+                    <a href="cadastro.html" class="btn-outline">Quero esse</a>
+                </div>
+                <div class="plan-card featured" data-animate="zoom">
+                    <div class="popular-badge">MAIS ESCOLHIDO</div>
+                    <h3>Plano Semestral</h3>
+                    <div class="price">R$ 89<small>/mês</small></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Todos os benefícios</li>
+                        <li><i class="fas fa-check-circle"></i> Avaliação física trimestral</li>
+                        <li><i class="fas fa-check-circle"></i> Toalha e cadeado free</li>
+                    </ul>
+                    <a href="cadastro.html" class="btn-primary">Assinar Agora</a>
+                </div>
+                <div class="plan-card" data-animate="zoom">
+                    <h3>Plano Anual</h3>
+                    <div class="price">R$ 79<small>/mês</small></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 12 meses + 2 grátis</li>
+                        <li><i class="fas fa-check-circle"></i> Camiseta exclusiva</li>
+                        <li><i class="fas fa-check-circle"></i> Liberdade total de aulas</li>
+                    </ul>
+                    <a href="cadastro.html" class="btn-outline">Garantir oferta</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE CONTATO / DEPOIMENTO RÁPIDO -->
+    <section class="contact-area" id="contato">
+        <div class="container contact-flex">
+            <div class="contact-info" data-animate="fade-right">
+                <span class="tag">Fale conosco</span>
+                <h2>Pronto para mudar sua vida?</h2>
+                <p>Entre em contato, tire dúvidas ou agende uma visita gratuita. Nossa equipe está preparada para te receber!</p>
+                <div class="contact-detail">
+                    <i class="fas fa-phone-alt"></i> <span>(11) 4002-8922</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i> <span>contato@ironfit.com.br</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i> <span>Av. Paulista, 1000 - São Paulo, SP</span>
+                </div>
+                <div class="social-icons-mini">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="contact-map" data-animate="fade-left">
+                <img src="img/outros.png" alt="Localização IronFit" style="border-radius: 24px; width: 100%; max-width: 480px; box-shadow: 0 20px 30px rgba(0,0,0,0.1); object-fit: cover;">
+                <div class="map-overlay"><i class="fas fa-location-dot"></i> Encontre a unidade mais perto</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PROFISSIONAL -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="img/logo.png" alt="Logo IronFit" width="45">
+                        <span>IronFit</span>
+                    </div>
+                    <p>Transformando vidas através do esporte e disciplina desde 2020.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <a href="index.html">Início</a>
+                    <a href="admin.html">Admin</a>
+                    <a href="cadastro.html">Cadastro</a>
+                    <a href="#planos">Planos</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <a href="#">Central de ajuda</a>
+                    <a href="#">Política de privacidade</a>
+                    <a href="#">Termos de uso</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Seu melhor e-mail" id="newsEmail">
+                        <button id="newsBtn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 IronFit Academia. Todos os direitos reservados. | Projeto TCC Frontend</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS JS (separado) -->
+    <script src="js/script.js"></script>
+</body>
+</html>

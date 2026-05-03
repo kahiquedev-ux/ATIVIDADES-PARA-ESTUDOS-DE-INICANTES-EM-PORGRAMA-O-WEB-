@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronFit | Painel do Dono - Sistema Profissional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; }
+
+        /* Dashboard Layout */
+        .dashboard-container { display: flex; min-height: 100vh; margin-top: 78px; }
+        .sidebar { width: 280px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; position: fixed; height: calc(100vh - 78px); overflow-y: auto; transition: all 0.3s; z-index: 100; }
+        .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header img { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 15px; border: 3px solid #ff3b30; }
+        .sidebar-header h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 0.85rem; opacity: 0.7; }
+        .sidebar-menu { padding: 20px 0; }
+        .menu-item { padding: 15px 25px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.3s; color: rgba(255,255,255,0.8); border-left: 3px solid transparent; }
+        .menu-item:hover { background: rgba(255,255,255,0.1); color: white; }
+        .menu-item.active { background: #ff3b30; border-left-color: white; color: white; }
+        .menu-item i { width: 24px; font-size: 1.2rem; }
+
+        .main-content { flex: 1; margin-left: 280px; padding: 30px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .stat-info h3 { font-size: 1.8rem; font-weight: 800; color: #ff3b30; }
+        .stat-info p { color: #666; margin-top: 5px; }
+        .stat-icon { width: 60px; height: 60px; background: rgba(255,59,48,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #ff3b30; }
+
+        .charts-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 30px; }
+        .chart-card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .chart-card h3 { margin-bottom: 20px; font-size: 1.2rem; color: #1a1a2e; }
+        canvas { max-height: 300px; width: 100% !important; }
+
+        .section-content { display: none; animation: fadeIn 0.3s ease; }
+        .section-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+        .section-header h2 { font-size: 1.8rem; color: #1a1a2e; }
+        .btn-add { background: #ff3b30; color: white; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
+        .btn-add:hover { background: #d32f2f; transform: scale(1.05); }
+
+        .table-container { background: white; border-radius: 20px; overflow-x: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #1a1a2e; color: white; padding: 15px; text-align: left; font-weight: 600; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
+        .status-active { background: #d4edda; color: #155724; }
+        .status-blocked { background: #f8d7da; color: #721c24; }
+        .status-pending { background: #fff3cd; color: #856404; }
+
+        .action-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .action-btn { padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; }
+        .btn-edit { background: #ffc107; color: #333; }
+        .btn-delete { background: #dc3545; color: white; }
+        .btn-block { background: #6c757d; color: white; }
+        .btn-view { background: #17a2b8; color: white; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 24px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { padding: 20px 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.4rem; }
+        .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; }
+
+        .modal-body { padding: 25px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 1rem; transition: all 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #ff3b30; }
+        .photo-preview { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-top: 10px; border: 3px solid #ff3b30; }
+        .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 25px; }
+        .btn-save { background: #ff3b30; color: white; padding: 12px 24px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; }
+        .btn-cancel { background: #6c757d; color: white; padding: 12px 24px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; }
+
+        .avatar-cell { display: flex; align-items: center; gap: 10px; }
+        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #f0f0f0; }
+
+        .search-box { padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 12px; width: 250px; }
+
+        /* Detalhes do Aluno */
+        .detail-card { display: flex; gap: 30px; flex-wrap: wrap; }
+        .detail-photo { flex: 0 0 200px; text-align: center; }
+        .detail-photo img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #ff3b30; }
+        .detail-info { flex: 1; }
+        .detail-info h4 { color: #ff3b30; margin-bottom: 20px; font-size: 1.5rem; }
+        .detail-item { margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 12px; }
+        .detail-item strong { display: inline-block; width: 120px; color: #1a1a2e; }
+        .history-list { max-height: 200px; overflow-y: auto; }
+        .history-item { padding: 8px; border-bottom: 1px solid #eee; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 0; transform: translateX(-100%); }
+            .sidebar.active { width: 280px; transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .menu-toggle { display: block; position: fixed; bottom: 20px; right: 20px; background: #ff3b30; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 200; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+            .charts-row { grid-template-columns: 1fr; }
+        }
+        @media (min-width: 769px) { .menu-toggle { display: none; } }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <div class="logo-area">
+            <img src="img/logo.png" alt="IronFit Logo" class="logo-img">
+            <span class="logo-text">IronFit - Gestão Profissional</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="admin.html" class="active">Admin</a>
+            <a href="cadastro.html">Cadastro</a>
+            <a href="login.html" id="logoutLink">Sair</a>
+        </nav>
+    </div>
+</header>
+
+<div class="dashboard-container">
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="img/logo.png" alt="Logo">
+            <h3>IronFit Academia</h3>
+            <p>Dono: Carlos Silva</p>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-section="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></div>
+            <div class="menu-item" data-section="alunos"><i class="fas fa-users"></i><span>Alunos</span></div>
+            <div class="menu-item" data-section="funcionarios"><i class="fas fa-user-tie"></i><span>Funcionários</span></div>
+            <div class="menu-item" data-section="vendas"><i class="fas fa-shopping-cart"></i><span>Vendas</span></div>
+            <div class="menu-item" data-section="financeiro"><i class="fas fa-dollar-sign"></i><span>Financeiro</span></div>
+            <div class="menu-item" data-section="relatorios"><i class="fas fa-file-alt"></i><span>Relatórios</span></div>
+        </div>
+    </div>
+
+    <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+
+    <div class="main-content">
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="section-content active">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-info"><h3 id="totalAlunos">0</h3><p>Total de Alunos</p></div><div class="stat-icon"><i class="fas fa-users"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="alunosAtivos">0</h3><p>Alunos Ativos</p></div><div class="stat-icon"><i class="fas fa-check-circle"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="alunosBloqueados">0</h3><p>Alunos Bloqueados</p></div><div class="stat-icon"><i class="fas fa-ban"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="totalFuncionarios">0</h3><p>Funcionários</p></div><div class="stat-icon"><i class="fas fa-user-tie"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="receitaMensal">R$ 0</h3><p>Receita Mensal</p></div><div class="stat-icon"><i class="fas fa-chart-line"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="vendasMes">0</h3><p>Vendas no Mês</p></div><div class="stat-icon"><i class="fas fa-calendar"></i></div></div>
+            </div>
+            <div class="charts-row">
+                <div class="chart-card"><h3><i class="fas fa-chart-pie"></i> Distribuição de Alunos</h3><canvas id="statusChart"></canvas></div>
+                <div class="chart-card"><h3><i class="fas fa-chart-line"></i> Vendas Mensais</h3><canvas id="vendasChart"></canvas></div>
+            </div>
+            <div class="charts-row">
+                <div class="chart-card"><h3><i class="fas fa-chart-bar"></i> Planos Mais Vendidos</h3><canvas id="planosChart"></canvas></div>
+                <div class="chart-card"><h3><i class="fas fa-chart-line"></i> Evolução de Alunos</h3><canvas id="evolucaoChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- ALUNOS -->
+        <div id="alunos" class="section-content">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Gestão de Alunos</h2>
+                <button class="btn-add" onclick="abrirModalAluno()"><i class="fas fa-plus"></i> Novo Aluno</button>
+            </div>
+            <div class="section-header">
+                <input type="text" id="searchAluno" placeholder="🔍 Buscar aluno..." class="search-box">
+                <select id="filterStatus" class="search-box">
+                    <option value="todos">Todos os status</option>
+                    <option value="ativo">Ativos</option>
+                    <option value="bloqueado">Bloqueados</option>
+                    <option value="pendente">Pendentes</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table><thead><tr><th>Foto</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Plano</th><th>Status</th><th>Ações</th></tr></thead><tbody id="alunosTableBody"></tbody></table>
+            </div>
+        </div>
+
+        <!-- FUNCIONÁRIOS -->
+        <div id="funcionarios" class="section-content">
+            <div class="section-header">
+                <h2><i class="fas fa-user-tie"></i> Equipe IronFit</h2>
+                <button class="btn-add" onclick="abrirModalFuncionario()"><i class="fas fa-plus"></i> Novo Funcionário</button>
+            </div>
+            <div class="table-container">
+                <table><thead><tr><th>Foto</th><th>Nome</th><th>Cargo</th><th>E-mail</th><th>Telefone</th><th>Salário</th><th>Ações</th></tr></thead><tbody id="funcionariosTableBody"></tbody></table>
+            </div>
+        </div>
+
+        <!-- VENDAS -->
+        <div id="vendas" class="section-content">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> Registro de Vendas</h2>
+                <button class="btn-add" onclick="abrirModalVenda()"><i class="fas fa-plus"></i> Nova Venda</button>
+            </div>
+            <div class="table-container">
+                <table><thead><tr><th>Cliente</th><th>Plano</th><th>Valor</th><th>Data</th><th>Vendedor</th><th>Status</th></tr></thead><tbody id="vendasTableBody"></tbody></table>
+            </div>
+        </div>
+
+        <!-- FINANCEIRO -->
+        <div id="financeiro" class="section-content">
+            <div class="section-header"><h2><i class="fas fa-dollar-sign"></i> Relatório Financeiro</h2></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-info"><h3 id="receitaTotal">R$ 0</h3><p>Receita Total</p></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="despesasTotal">R$ 0</h3><p>Despesas Totais</p></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 id="lucroLiquido">R$ 0</h3><p>Lucro Líquido</p></div></div>
+            </div>
+        </div>
+
+        <!-- RELATÓRIOS -->
+        <div id="relatorios" class="section-content">
+            <div class="section-header"><h2><i class="fas fa-file-alt"></i> Relatórios Gerenciais</h2></div>
+            <div class="charts-row">
+                <div class="chart-card"><h3>Top 5 Alunos (Mensalidade)</h3><canvas id="topAlunosChart"></canvas></div>
+                <div class="chart-card"><h3>Desempenho por Funcionário</h3><canvas id="funcionariosChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ALUNO -->
+<div id="modalAluno" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3><i class="fas fa-user-plus"></i> Cadastrar/Editar Aluno</h3><button class="close-modal" onclick="fecharModal('modalAluno')">&times;</button></div>
+        <div class="modal-body">
+            <form id="formAluno">
+                <input type="hidden" id="alunoId">
+                <div class="form-group"><label>Foto do Aluno</label><input type="file" id="fotoAluno" accept="image/*"><img id="previewFoto" class="photo-preview" style="display:none;"></div>
+                <div class="form-group"><label>Nome Completo *</label><input type="text" id="nomeAluno" required></div>
+                <div class="form-group"><label>E-mail *</label><input type="email" id="emailAluno" required></div>
+                <div class="form-group"><label>Telefone *</label><input type="tel" id="telefoneAluno" required></div>
+                <div class="form-group"><label>Data de Nascimento</label><input type="date" id="dataNascimento"></div>
+                <div class="form-group"><label>Endereço</label><textarea id="endereco" rows="2"></textarea></div>
+                <div class="form-group"><label>Plano</label><select id="planoAluno"><option>Mensal R$99</option><option>Trimestral R$279</option><option>Semestral R$534</option><option>Anual R$948</option></select></div>
+                <div class="form-group"><label>Status</label><select id="statusAluno"><option value="ativo">Ativo</option><option value="bloqueado">Bloqueado</option><option value="pendente">Pendente</option></select></div>
+                <div class="form-actions"><button type="button" class="btn-cancel" onclick="fecharModal('modalAluno')">Cancelar</button><button type="submit" class="btn-save">Salvar Aluno</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DETALHES DO ALUNO -->
+<div id="modalDetalhes" class="modal">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header"><h3><i class="fas fa-id-card"></i> Detalhes do Aluno</h3><button class="close-modal" onclick="fecharModal('modalDetalhes')">&times;</button></div>
+        <div class="modal-body" id="detalhesContent"></div>
+    </div>
+</div>
+
+<!-- MODAL FUNCIONÁRIO -->
+<div id="modalFuncionario" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3><i class="fas fa-user-tie"></i> Cadastrar Funcionário</h3><button class="close-modal" onclick="fecharModal('modalFuncionario')">&times;</button></div>
+        <div class="modal-body">
+            <form id="formFuncionario">
+                <input type="hidden" id="funcionarioId">
+                <div class="form-group"><label>Foto</label><input type="file" id="fotoFuncionario" accept="image/*"><img id="previewFotoFunc" class="photo-preview" style="display:none;"></div>
+                <div class="form-group"><label>Nome *</label><input type="text" id="nomeFuncionario" required></div>
+                <div class="form-group"><label>Cargo *</label><select id="cargoFuncionario"><option>Personal Trainer</option><option>Recepcionista</option><option>Gerente</option><option>Limpeza</option><option>Nutricionista</option></select></div>
+                <div class="form-group"><label>E-mail</label><input type="email" id="emailFuncionario"></div>
+                <div class="form-group"><label>Telefone</label><input type="tel" id="telefoneFuncionario"></div>
+                <div class="form-group"><label>Data de Admissão</label><input type="date" id="dataAdmissao"></div>
+                <div class="form-group"><label>Salário (R$)</label><input type="number" id="salarioFuncionario" step="100"></div>
+                <div class="form-actions"><button type="button" class="btn-cancel" onclick="fecharModal('modalFuncionario')">Cancelar</button><button type="submit" class="btn-save">Salvar Funcionário</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VENDA -->
+<div id="modalVenda" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3><i class="fas fa-cart-plus"></i> Registrar Venda</h3><button class="close-modal" onclick="fecharModal('modalVenda')">&times;</button></div>
+        <div class="modal-body">
+            <form id="formVenda">
+                <div class="form-group"><label>Cliente</label><select id="clienteVenda" required></select></div>
+                <div class="form-group"><label>Plano</label><select id="planoVenda"><option>Mensal R$99</option><option>Trimestral R$279</option><option>Semestral R$534</option><option>Anual R$948</option></select></div>
+                <div class="form-group"><label>Vendedor</label><select id="vendedorVenda" required></select></div>
+                <div class="form-group"><label>Forma de Pagamento</label><select id="pagamentoVenda"><option>Cartão de Crédito</option><option>Cartão de Débito</option><option>Pix</option><option>Dinheiro</option></select></div>
+                <div class="form-actions"><button type="button" class="btn-cancel" onclick="fecharModal('modalVenda')">Cancelar</button><button type="submit" class="btn-save">Registrar Venda</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+    // DADOS INICIAIS
+    let alunos = JSON.parse(localStorage.getItem('ironfit_alunos_sistema') || '[]');
+    let funcionarios = JSON.parse(localStorage.getItem('ironfit_funcionarios') || '[]');
+    let vendas = JSON.parse(localStorage.getItem('ironfit_vendas') || '[]');
+
+    if(alunos.length === 0){
+        alunos = [
+            {id:1, foto:'img/outros.png', nome:'João Silva', email:'joao@email.com', telefone:'(11) 99999-1111', dataNasc:'1990-05-15', endereco:'Rua A, 123 - SP', plano:'Mensal R$99', status:'ativo', dataCadastro:'2024-01-15', historico:['01/01/2025 - Pagamento R$99', '01/12/2024 - Pagamento R$99']},
+            {id:2, foto:'img/outros.png', nome:'Maria Santos', email:'maria@email.com', telefone:'(11) 98888-2222', dataNasc:'1985-08-20', endereco:'Av B, 456 - SP', plano:'Semestral R$534', status:'ativo', dataCadastro:'2024-03-10', historico:['10/01/2025 - Pagamento R$534', '10/10/2024 - Pagamento R$534']},
+            {id:3, foto:'img/outros.png', nome:'Pedro Costa', email:'pedro@email.com', telefone:'(11) 97777-3333', dataNasc:'1995-12-01', endereco:'Rua C, 789 - SP', plano:'Anual R$948', status:'bloqueado', dataCadastro:'2023-11-20', historico:['20/11/2024 - Pagamento R$948', 'Bloqueado por inadimplência']}
+        ];
+        salvarAlunos();
+    }
+    if(funcionarios.length === 0){
+        funcionarios = [
+            {id:1, foto:'img/outros.png', nome:'Carlos Personal', cargo:'Personal Trainer', email:'carlos@ironfit.com', telefone:'(11) 96666-1111', salario:3500, dataAdmissao:'2023-01-10', vendasRealizadas:45},
+            {id:2, foto:'img/outros.png', nome:'Ana Recepção', cargo:'Recepcionista', email:'ana@ironfit.com', telefone:'(11) 95555-2222', salario:2200, dataAdmissao:'2023-03-15', vendasRealizadas:32}
+        ];
+        salvarFuncionarios();
+    }
+    if(vendas.length === 0){
+        vendas = [
+            {id:1, cliente:'João Silva', plano:'Mensal R$99', valor:99, data:'15/01/2025', vendedor:'Ana Recepção', status:'Concluído'},
+            {id:2, cliente:'Maria Santos', plano:'Semestral R$534', valor:534, data:'10/01/2025', vendedor:'Carlos Personal', status:'Concluído'},
+            {id:3, cliente:'Pedro Costa', plano:'Anual R$948', valor:948, data:'20/12/2024', vendedor:'Carlos Personal', status:'Concluído'}
+        ];
+        salvarVendas();
+    }
+
+    let charts = {};
+
+    function salvarAlunos(){ localStorage.setItem('ironfit_alunos_sistema', JSON.stringify(alunos)); atualizarDashboard(); atualizarGraficos(); }
+    function salvarFuncionarios(){ localStorage.setItem('ironfit_funcionarios', JSON.stringify(funcionarios)); atualizarDashboard(); atualizarGraficos(); }
+    function salvarVendas(){ localStorage.setItem('ironfit_vendas', JSON.stringify(vendas)); atualizarDashboard(); atualizarGraficos(); }
+
+    function atualizarDashboard(){
+        document.getElementById('totalAlunos').innerText = alunos.length;
+        document.getElementById('alunosAtivos').innerText = alunos.filter(a=>a.status==='ativo').length;
+        document.getElementById('alunosBloqueados').innerText = alunos.filter(a=>a.status==='bloqueado').length;
+        document.getElementById('totalFuncionarios').innerText = funcionarios.length;
+        let receita = vendas.reduce((sum,v)=>sum+v.valor,0);
+        document.getElementById('receitaMensal').innerText = `R$ ${receita}`;
+        document.getElementById('vendasMes').innerText = vendas.length;
+        document.getElementById('receitaTotal').innerText = `R$ ${receita}`;
+        let despesas = funcionarios.reduce((sum,f)=>sum+(f.salario||0),0);
+        document.getElementById('despesasTotal').innerText = `R$ ${despesas}`;
+        document.getElementById('lucroLiquido').innerText = `R$ ${receita - despesas}`;
+        renderAlunos();
+        renderFuncionarios();
+        renderVendas();
+    }
+
+    function renderAlunos(){
+        let filter = document.getElementById('filterStatus')?.value || 'todos';
+        let search = document.getElementById('searchAluno')?.value.toLowerCase() || '';
+        let filtered = alunos.filter(a=> (filter==='todos'||a.status===filter) && a.nome.toLowerCase().includes(search));
+        document.getElementById('alunosTableBody').innerHTML = filtered.map(a => `
+            <tr>
+                <td><div class="avatar-cell"><img src="${a.foto||'img/outros.png'}" class="avatar-img" onerror="this.src='img/outros.png'"></div></td>
+                <td><strong>${a.nome}</strong></td>
+                <td>${a.email}</td>
+                <td>${a.telefone}</td>
+                <td>${a.plano}</td>
+                <td><span class="status-badge status-${a.status==='ativo'?'active':a.status==='bloqueado'?'blocked':'pending'}">${a.status==='ativo'?'Ativo':a.status==='bloqueado'?'Bloqueado':'Pendente'}</span></td>
+                <td class="action-buttons">
+                    <button class="action-btn btn-view" onclick="verDetalhesAluno(${a.id})"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn btn-edit" onclick="editarAluno(${a.id})"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn btn-delete" onclick="excluirAluno(${a.id})"><i class="fas fa-trash"></i></button>
+                    <button class="action-btn btn-block" onclick="toggleStatusAluno(${a.id})"><i class="fas ${a.status==='ativo'?'fa-ban':'fa-check'}"></i></button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function renderFuncionarios(){
+        document.getElementById('funcionariosTableBody').innerHTML = funcionarios.map(f => `
+            <tr>
+                <td><div class="avatar-cell"><img src="${f.foto||'img/outros.png'}" class="avatar-img"></div></td>
+                <td><strong>${f.nome}</strong></td>
+                <td>${f.cargo}</td>
+                <td>${f.email}</td>
+                <td>${f.telefone}</td>
+                <td>R$ ${f.salario||0}</td>
+                <td class="action-buttons">
+                    <button class="action-btn btn-edit" onclick="editarFuncionario(${f.id})"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn btn-delete" onclick="excluirFuncionario(${f.id})"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function renderVendas(){
+        document.getElementById('vendasTableBody').innerHTML = vendas.map(v => `<tr><td><strong>${v.cliente}</strong></td><td>${v.plano}</td><td>R$ ${v.valor}</td><td>${v.data}</td><td>${v.vendedor}</td><td><span class="status-badge status-active">${v.status}</span></td></tr>`).join('');
+        let clienteSelect = document.getElementById('clienteVenda');
+        if(clienteSelect) clienteSelect.innerHTML = alunos.map(a=>`<option>${a.nome}</option>`).join('');
+        let vendedorSelect = document.getElementById('vendedorVenda');
+        if(vendedorSelect) vendedorSelect.innerHTML = funcionarios.map(f=>`<option>${f.nome}</option>`).join('');
+    }
+
+    function verDetalhesAluno(id){
+        let aluno = alunos.find(a=>a.id===id);
+        if(aluno){
+            let idade = aluno.dataNasc ? Math.floor((new Date() - new Date(aluno.dataNasc)) / (365.25 * 24 * 60 * 60 * 1000)) : 'Não informado';
+            document.getElementById('detalhesContent').innerHTML = `
+                <div class="detail-card">
+                    <div class="detail-photo">
+                        <img src="${aluno.foto||'img/outros.png'}" onerror="this.src='img/outros.png'">
+                        <h4 style="margin-top:15px">${aluno.nome}</h4>
+                        <span class="status-badge status-${aluno.status==='ativo'?'active':aluno.status==='bloqueado'?'blocked':'pending'}">${aluno.status}</span>
+                    </div>
+                    <div class="detail-info">
+                        <div class="detail-item"><strong><i class="fas fa-envelope"></i> E-mail:</strong> ${aluno.email}</div>
+                        <div class="detail-item"><strong><i class="fas fa-phone"></i> Telefone:</strong> ${aluno.telefone}</div>
+                        <div class="detail-item"><strong><i class="fas fa-calendar"></i> Nascimento:</strong> ${aluno.dataNasc || 'Não informado'} (${idade} anos)</div>
+                        <div class="detail-item"><strong><i class="fas fa-map-marker"></i> Endereço:</strong> ${aluno.endereco || 'Não informado'}</div>
+                        <div class="detail-item"><strong><i class="fas fa-dumbbell"></i> Plano:</strong> ${aluno.plano}</div>
+                        <div class="detail-item"><strong><i class="fas fa-calendar-plus"></i> Cadastro:</strong> ${aluno.dataCadastro || new Date().toLocaleDateString()}</div>
+                        <div class="detail-item"><strong><i class="fas fa-history"></i> Histórico:</strong></div>
+                        <div class="history-list">${(aluno.historico || ['Nenhum registro']).map(h=>`<div class="history-item">📌 ${h}</div>`).join('')}</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('modalDetalhes').classList.add('active');
+        }
+    }
+
+    function editarAluno(id){
+        let aluno = alunos.find(a=>a.id===id);
+        if(aluno){
+            document.getElementById('alunoId').value = aluno.id;
+            document.getElementById('nomeAluno').value = aluno.nome;
+            document.getElementById('emailAluno').value = aluno.email;
+            document.getElementById('telefoneAluno').value = aluno.telefone;
+            document.getElementById('dataNascimento').value = aluno.dataNasc || '';
+            document.getElementById('endereco').value = aluno.endereco || '';
+            document.getElementById('planoAluno').value = aluno.plano;
+            document.getElementById('statusAluno').value = aluno.status;
+            if(aluno.foto && aluno.foto !== 'img/outros.png'){
+                document.getElementById('previewFoto').src = aluno.foto;
+                document.getElementById('previewFoto').style.display = 'block';
+            }
+            abrirModalAluno();
+        }
+    }
+
+    function editarFuncionario(id){
+        let func = funcionarios.find(f=>f.id===id);
+        if(func){
+            document.getElementById('funcionarioId').value = func.id;
+            document.getElementById('nomeFuncionario').value = func.nome;
+            document.getElementById('cargoFuncionario').value = func.cargo;
+            document.getElementById('emailFuncionario').value = func.email;
+            document.getElementById('telefoneFuncionario').value = func.telefone;
+            document.getElementById('dataAdmissao').value = func.dataAdmissao || '';
+            document.getElementById('salarioFuncionario').value = func.salario;
+            if(func.foto && func.foto !== 'img/outros.png'){
+                document.getElementById('previewFotoFunc').src = func.foto;
+                document.getElementById('previewFotoFunc').style.display = 'block';
+            }
+            abrirModalFuncionario();
+        }
+    }
+
+    function atualizarGraficos(){
+        // Gráfico de Status
+        let ativos = alunos.filter(a=>a.status==='ativo').length;
+        let bloqueados = alunos.filter(a=>a.status==='bloqueado').length;
+        let pendentes = alunos.filter(a=>a.status==='pendente').length;
+        
+        if(charts.statusChart) charts.statusChart.destroy();
+        charts.statusChart = new Chart(document.getElementById('statusChart'), {
+            type: 'doughnut',
+            data: { labels: ['Ativos', 'Bloqueados', 'Pendentes'], datasets: [{ data: [ativos, bloqueados, pendentes], backgroundColor: ['#28a745', '#dc3545', '#ffc107'] }] },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+
+        // Gráfico de Vendas Mensais
+        let vendasPorMes = {};
+        vendas.forEach(v=>{ let mes = v.data.split('/')[1]; vendasPorMes[mes] = (vendasPorMes[mes]||0)+v.valor; });
+        if(charts.vendasChart) charts.vendasChart.destroy();
+        charts.vendasChart = new Chart(document.getElementById('vendasChart'), {
+            type: 'line',
+            data: { labels: Object.keys(vendasPorMes), datasets: [{ label: 'Vendas (R$)', data: Object.values(vendasPorMes), borderColor: '#ff3b30', tension: 0.4 }] }
+        });
+
+        // Gráfico de Planos
+        let planosCount = {};
+        alunos.forEach(a=>{ planosCount[a.plano] = (planosCount[a.plano]||0)+1; });
+        if(charts.planosChart) charts.planosChart.destroy();
+        charts.planosChart = new Chart(document.getElementById('planosChart'), {
+            type: 'bar',
+            data: { labels: Object.keys(planosCount), datasets: [{ label: 'Alunos por Plano', data: Object.values(planosCount), backgroundColor: '#17a2b8' }] }
+        });
+
+        // Evolução de Alunos
+        let meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+        let evolucao = [12, 15, 18, 22, 25, alunos.length];
+        if(charts.evolucaoChart) charts.evolucaoChart.destroy();
+        charts.evolucaoChart = new Chart(document.getElementById('evolucaoChart'), {
+            type: 'line',
+            data: { labels: meses, datasets: [{ label: 'Total de Alunos', data: evolucao, borderColor: '#28a745', fill: true }] }
+        });
+
+        // Top Alunos
+        if(charts.topAlunosChart) charts.topAlunosChart.destroy();
+        charts.topAlunosChart = new Chart(document.getElementById('topAlunosChart'), {
+            type: 'bar',
+            data: { labels: alunos.slice(0,5).map(a=>a.nome), datasets: [{ label: 'Valor Mensal (R$)', data: alunos.slice(0,5).map(()=>Math.floor(Math.random()*500+100)), backgroundColor: '#ffc107' }] }
+        });
+
+        // Funcionários Performance
+        if(charts.funcionariosChart) charts.funcionariosChart.destroy();
+        charts.funcionariosChart = new Chart(document.getElementById('funcionariosChart'), {
+            type: 'polarArea',
+            data: { labels: funcionarios.map(f=>f.nome), datasets: [{ data: funcionarios.map(f=>f.vendasRealizadas||Math.floor(Math.random()*50+10)), backgroundColor: ['#ff3b30','#17a2b8','#28a745','#ffc107','#6c757d'] }] }
+        });
+    }
+
+    window.abrirModalAluno = () => { document.getElementById('modalAluno').classList.add('active'); document.getElementById('formAluno').reset(); document.getElementById('alunoId').value=''; document.getElementById('previewFoto').style.display='none'; }
+    window.abrirModalFuncionario = () => { document.getElementById('modalFuncionario').classList.add('active'); document.getElementById('formFuncionario').reset(); document.getElementById('funcionarioId').value=''; document.getElementById('previewFotoFunc').style.display='none'; }
+    window.abrirModalVenda = () => { document.getElementById('modalVenda').classList.add('active'); renderVendas(); }
+    window.fecharModal = (id) => { document.getElementById(id).classList.remove('active'); }
+
+    document.getElementById('formAluno')?.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        let id = document.getElementById('alunoId').value;
+        let foto = document.getElementById('previewFoto').src || 'img/outros.png';
+        let alunoData = { 
+            id: id ? parseInt(id) : Date.now(), 
+            foto, 
+            nome:document.getElementById('nomeAluno').value, 
+            email:document.getElementById('emailAluno').value, 
+            telefone:document.getElementById('telefoneAluno').value,
+            dataNasc:document.getElementById('dataNascimento').value,
+            endereco:document.getElementById('endereco').value,
+            plano:document.getElementById('planoAluno').value, 
+            status:document.getElementById('statusAluno').value,
+            dataCadastro: new Date().toLocaleDateString(),
+            historico: ['Cadastro realizado em ' + new Date().toLocaleDateString()]
+        };
+        if(id){ 
+            let index = alunos.findIndex(a=>a.id==id);
+            if(index!==-1) alunos[index] = {...alunos[index], ...alunoData};
+        } else { alunos.push(alunoData); }
+        salvarAlunos(); fecharModal('modalAluno');
+        mostrarToast(id ? 'Aluno atualizado!' : 'Aluno cadastrado!','success');
+    });
+
+    document.getElementById('formFuncionario')?.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        let id = document.getElementById('funcionarioId').value;
+        let foto = document.getElementById('previewFotoFunc').src || 'img/outros.png';
+        let funcData = { 
+            id: id ? parseInt(id) : Date.now(), 
+            foto, 
+            nome:document.getElementById('nomeFuncionario').value, 
+            cargo:document.getElementById('cargoFuncionario').value, 
+            email:document.getElementById('emailFuncionario').value, 
+            telefone:document.getElementById('telefoneFuncionario').value,
+            dataAdmissao:document.getElementById('dataAdmissao').value,
+            salario:parseInt(document.getElementById('salarioFuncionario').value)||0,
+            vendasRealizadas: Math.floor(Math.random()*50)
+        };
+        if(id){ let index = funcionarios.findIndex(f=>f.id==id); if(index!==-1) funcionarios[index] = {...funcionarios[index], ...funcData}; }
+        else { funcionarios.push(funcData); }
+        salvarFuncionarios(); fecharModal('modalFuncionario');
+        mostrarToast(id ? 'Funcionário atualizado!' : 'Funcionário cadastrado!','success');
+    });
+
+    document.getElementById('formVenda')?.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        let planos = { 'Mensal R$99':99,'Trimestral R$279':279,'Semestral R$534':534,'Anual R$948':948 };
+        let planoSelecionado = document.getElementById('planoVenda').value;
+        let novaVenda = { id:Date.now(), cliente:document.getElementById('clienteVenda').value, plano:planoSelecionado, valor:planos[planoSelecionado], data:new Date().toLocaleDateString(), vendedor:document.getElementById('vendedorVenda').value, status:'Concluído' };
+        vendas.push(novaVenda); salvarVendas(); fecharModal('modalVenda');
+        mostrarToast('Venda registrada!','success');
+    });
+
+    window.excluirAluno = (id)=>{ if(confirm('Excluir aluno permanentemente?')){ alunos=alunos.filter(a=>a.id!==id); salvarAlunos(); } }
+    window.excluirFuncionario = (id)=>{ if(confirm('Excluir funcionário?')){ funcionarios=funcionarios.filter(f=>f.id!==id); salvarFuncionarios(); } }
+    window.toggleStatusAluno = (id)=>{ let aluno=alunos.find(a=>a.id===id); if(aluno){ aluno.status=aluno.status==='ativo'?'bloqueado':'ativo'; salvarAlunos(); } }
+
+    document.getElementById('searchAluno')?.addEventListener('input',()=>renderAlunos());
+    document.getElementById('filterStatus')?.addEventListener('change',()=>renderAlunos());
+
+    document.getElementById('fotoAluno')?.addEventListener('change',(e)=>{ let reader=new FileReader(); reader.onload=function(ev){ document.getElementById('previewFoto').src=ev.target.result; document.getElementById('previewFoto').style.display='block'; }; if(e.target.files[0]) reader.readAsDataURL(e.target.files[0]); });
+    document.getElementById('fotoFuncionario')?.addEventListener('change',(e)=>{ let reader=new FileReader(); reader.onload=function(ev){ document.getElementById('previewFotoFunc').src=ev.target.result; document.getElementById('previewFotoFunc').style.display='block'; }; if(e.target.files[0]) reader.readAsDataURL(e.target.files[0]); });
+
+    document.querySelectorAll('.menu-item').forEach(item=>{
+        item.addEventListener('click',()=>{
+            document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('active'));
+            item.classList.add('active');
+            document.querySelectorAll('.section-content').forEach(s=>s.classList.remove('active'));
+            document.getElementById(item.dataset.section).classList.add('active');
+        });
+    });
+    document.getElementById('menuToggle')?.addEventListener('click',()=>{ document.getElementById('sidebar').classList.toggle('active'); });
+    document.getElementById('logoutLink')?.addEventListener('click',(e)=>{ e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.href='index.html'; });
+    
+    function mostrarToast(msg,tipo){ 
+        let toast=document.createElement('div'); 
+        toast.className=`toast-notification ${tipo}`; 
+        toast.innerHTML=`<i class="fas ${tipo==='success'?'fa-check-circle':'fa-info-circle'}"></i> <span>${msg}</span>`; 
+        toast.style.cssText='position:fixed;bottom:30px;right:30px;background:white;padding:12px 24px;border-radius:12px;z-index:3000;box-shadow:0 5px 15px rgba(0,0,0,0.2);border-left:4px solid #ff3b30;';
+        document.body.appendChild(toast); 
+        setTimeout(()=>toast.remove(),3000); 
+    }
+    
+    atualizarDashboard();
+    atualizarGraficos();
+</script>
+</body>
+</html>
