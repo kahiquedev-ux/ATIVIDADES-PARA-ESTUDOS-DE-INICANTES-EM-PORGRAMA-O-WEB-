@@ -1,0 +1,86 @@
+/* Estilos globais */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa; /* Cor de fundo clara */
+  color: #343a40; /* Cor de texto padrão */
+}
+
+/* Navbar personalizada */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,.05); /* Sombra suave para a barra de navegação */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #e83e8c !important; /* Cor rosa para a marca */
+}
+
+.nav-link {
+  color: #343a40 !important; /* Cor de texto para os links */
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: #e83e8c !important; /* Cor rosa ao passar o mouse ou link ativo */
+}
+
+/* Carrossel */
+.carousel-item img {
+  height: 500px; /* Altura fixa para as imagens do carrossel */
+  object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente para a legenda */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.carousel-caption h5 {
+  color: #fff;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.carousel-caption p {
+  color: #fff;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* Seção de Produtos */
+h2 {
+  color: #e83e8c; /* Cor rosa para títulos de seção */
+  font-weight: bold;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,.1); /* Sombra para os cards */
+  transition: transform 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Efeito de levantar ao passar o mouse */
+}
+
+.card-title {
+  color: #e83e8c;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #e83e8c; /* Cor rosa para botões primários */
+  border-color: #e83e8c;
+}
+
+.btn-primary:hover {
+  background-color: #d63384; /* Tom mais escuro de rosa ao passar o mouse */
+  border-color: #d63384;
+}
+
+/* Rodapé */
+footer {
+  background-color: #343a40 !important; /* Fundo escuro para o rodapé */
+  color: #f8f9fa !important; /* Texto claro */
+}

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confeitaria Delícias - Bolos Artesanais</title>
+
+  <!-- Link para o CSS do Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome para ícones -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  >
+
+  <!-- Animate.css para animações -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  >
+
+  <!-- Link para o nosso CSS personalizado -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+  <!-- Barra de Navegação (Navbar) -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-cake-candles"></i>
+        Confeitaria Delícias
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#home">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#produtos">Produtos</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#sobre">Sobre Nós</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#contato">Contato</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">
+              <i class="fas fa-user"></i> Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link btn-cadastro" href="cadastro.html">
+              <i class="fas fa-user-plus"></i> Cadastro
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Carrossel de Banners -->
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="./img/banner1.jpg" class="d-block w-100" alt="Bolo de Chocolate">
+        <div class="carousel-caption animate__animated animate__fadeInUp">
+          <h5>Bolos Frescos e Deliciosos</h5>
+          <p>Feitos com os melhores ingredientes para você.</p>
+          <a href="#produtos" class="btn btn-primary btn-lg">Ver Produtos</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="./img/banner3.jpg" class="d-block w-100" alt="Bolo de Aniversário">
+        <div class="carousel-caption animate__animated animate__fadeInUp">
+          <h5>Celebre Conosco</h5>
+          <p>Doces para todas as ocasiões especiais.</p>
+          <a href="#produtos" class="btn btn-primary btn-lg">Encomendar</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="./img/logo.jpg" class="d-block w-100" alt="Cupcakes Decorados">
+        <div class="carousel-caption animate__animated animate__fadeInUp">
+          <h5>Personalize seu Pedido</h5>
+          <p>Cupcakes e doces personalizados do seu jeito.</p>
+          <a href="#produtos" class="btn btn-primary btn-lg">Personalizar</a>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Próximo</span>
+    </button>
+  </div>
+
+  <!-- Seção de Produtos -->
+  <section id="produtos" class="container my-5 py-5">
+    <h2 class="text-center mb-5 animate__animated animate__fadeInUp">Nossos Produtos</h2>
+    <p class="text-center text-muted mb-5">Delícias preparadas com muito amor e ingredientes selecionados</p>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card product-card h-100 animate__animated animate__fadeInUp">
+          <div class="card-img-top-wrapper">
+            <img src="./img/logo.jpg" class="card-img-top" alt="Bolo de Aniversário">
+            <div class="card-overlay">
+              <span class="badge bg-primary">Mais Vendido</span>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <i class="fas fa-birthday-cake product-icon"></i>
+            <h5 class="card-title">Bolo de Aniversário</h5>
+            <p class="card-text">Bolos personalizados para tornar sua festa inesquecível. Diversos sabores e recheios disponíveis.</p>
+            <div class="price">A partir de R$ 89,90</div>
+            <a href="#" class="btn btn-primary mt-3">
+              <i class="fas fa-shopping-cart"></i> Ver Detalhes
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card product-card h-100 animate__animated animate__fadeInUp">
+          <div class="card-img-top-wrapper">
+            <img src="./img/logo.jpg" class="card-img-top" alt="Docinhos Finos">
+          </div>
+          <div class="card-body text-center">
+            <i class="fas fa-candy-cane product-icon"></i>
+            <h5 class="card-title">Docinhos Finos</h5>
+            <p class="card-text">Variedade de doces finos para complementar sua celebração. Brigadeiros, beijinhos, cajuzinhos e mais.</p>
+            <div class="price">Cento a partir de R$ 120,00</div>
+            <a href="#" class="btn btn-primary mt-3">
+              <i class="fas fa-shopping-cart"></i> Ver Detalhes
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card product-card h-100 animate__animated animate__fadeInUp">
+          <div class="card-img-top-wrapper">
+            <img src="./img/logo.jpg" class="card-img-top" alt="Cupcakes Decorados">
+          </div>
+          <div class="card-body text-center">
+            <i class="fas fa-cupcake product-icon"></i>
+            <h5 class="card-title">Cupcakes Decorados</h5>
+            <p class="card-text">Pequenas delícias com decorações criativas e saborosas. Perfeitos para festas e eventos especiais.</p>
+            <div class="price">A partir de R$ 8,90/unidade</div>
+            <a href="#" class="btn btn-primary mt-3">
+              <i class="fas fa-shopping-cart"></i> Ver Detalhes
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de Diferenciais -->
+  <section class="diferenciais py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 text-white">Por que escolher a gente?</h2>
+      <div class="row">
+        <div class="col-md-3 text-center mb-4">
+          <div class="diferencial-item">
+            <i class="fas fa-leaf"></i>
+            <h5>Ingredientes Naturais</h5>
+            <p>Selecionamos os melhores e mais frescos ingredientes</p>
+          </div>
+        </div>
+        <div class="col-md-3 text-center mb-4">
+          <div class="diferencial-item">
+            <i class="fas fa-heart"></i>
+            <h5>Feitos com Amor</h5>
+            <p>Cada receita é preparada com muito carinho e dedicação</p>
+          </div>
+        </div>
+        <div class="col-md-3 text-center mb-4">
+          <div class="diferencial-item">
+            <i class="fas fa-truck"></i>
+            <h5>Entrega Rápida</h5>
+            <p>Entregamos seu pedido com segurança e pontualidade</p>
+          </div>
+        </div>
+        <div class="col-md-3 text-center mb-4">
+          <div class="diferencial-item">
+            <i class="fas fa-star"></i>
+            <h5>Qualidade Garantida</h5>
+            <p>Produtos feitos sob rigoroso controle de qualidade</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção Sobre Nós -->
+  <section id="sobre" class="py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 animate__animated animate__fadeInLeft">
+          <img src="./img/banner1.jpg" alt="Sobre a Confeitaria" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-lg-6 animate__animated animate__fadeInRight">
+          <h2 class="mb-4">Sobre a Confeitaria Delícias</h2>
+          <p class="lead">
+            Desde 2010, a Confeitaria Delícias tem o prazer de adoçar a vida de nossos clientes com bolos e doces
+            artesanais feitos com amor e dedicação.
+          </p>
+          <p>
+            Utilizamos apenas ingredientes frescos e de alta qualidade para garantir um sabor inigualável em cada mordida.
+            Nossa missão é transformar momentos especiais em memórias doces e inesquecíveis.
+          </p>
+          <p>
+            <strong>Visite nossa confeitaria:</strong><br>
+            <i class="fas fa-map-marker-alt"></i> Rua dos Doces, 123 - Centro, São Paulo - SP<br>
+            <i class="fas fa-phone"></i> (11) 99999-9999<br>
+            <i class="fas fa-envelope"></i> contato@confeitariadelicias.com.br
+          </p>
+          <a href="#contato" class="btn btn-primary mt-3">
+            <i class="fas fa-envelope"></i> Fale Conosco
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de Contato -->
+  <section id="contato" class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Entre em Contato</h2>
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="contact-info">
+            <h4>Horário de Funcionamento</h4>
+            <p><i class="fas fa-clock"></i> Segunda a Sexta: 8h às 20h</p>
+            <p><i class="fas fa-clock"></i> Sábados: 9h às 18h</p>
+            <p><i class="fas fa-clock"></i> Domingos: 9h às 14h</p>
+            
+            <h4 class="mt-4">Redes Sociais</h4>
+            <div class="social-links">
+              <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <form>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="nome" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="mensagem" class="form-label">Mensagem</label>
+              <textarea class="form-control" id="mensagem" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Enviar Mensagem
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Botão Voltar ao Topo -->
+  <button id="backToTop" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Rodapé -->
+  <footer class="footer bg-dark text-white pt-5 pb-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5><i class="fas fa-cake-candles"></i> Confeitaria Delícias</h5>
+          <p>Adoçando sua vida desde 2010 com os melhores bolos e doces artesanais.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Links Rápidos</h5>
+          <ul class="list-unstyled">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#sobre">Sobre Nós</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Newsletter</h5>
+          <p>Receba nossas promoções e novidades!</p>
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Seu email">
+            <button class="btn btn-primary" type="button">Assinar</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="text-center">
+        <p class="mb-0">&copy; 2024 Confeitaria Delícias. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Link para o JS do Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Link para o nosso JavaScript personalizado -->
+  <script src="./js/script.js"></script>
+
+  <!-- Script adicional -->
+  <script>
+    // Botão Voltar ao Topo
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Scroll suave para os links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+    
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+
+  <style>
+    /* Estilos adicionais */
+    .navbar {
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .navbar.scrolled {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      padding: 0.5rem 0;
+    }
+    
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .navbar-brand i {
+      margin-right: 10px;
+    }
+    
+    .btn-cadastro {
+      background: rgba(255,255,255,0.2);
+      border-radius: 25px;
+      transition: all 0.3s;
+    }
+    
+    .btn-cadastro:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+    
+    .carousel-item {
+      height: 600px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      opacity: 0.9;
+    }
+    
+    .carousel-caption {
+      bottom: 50%;
+      transform: translateY(50%);
+    }
+    
+    .carousel-caption h5 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    
+    .product-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .card-img-top-wrapper {
+      position: relative;
+      overflow: hidden;
+      height: 250px;
+    }
+    
+    .card-img-top {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    
+    .product-card:hover .card-img-top {
+      transform: scale(1.1);
+    }
+    
+    .product-icon {
+      font-size: 2rem;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+    
+    .price {
+      color: #764ba2;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .diferenciais {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .diferencial-item {
+      color: white;
+      padding: 20px;
+    }
+    
+    .diferencial-item i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-link {
+      color: #667eea;
+      font-size: 1.5rem;
+      transition: all 0.3s;
+    }
+    
+    .social-link:hover {
+      color: #764ba2;
+      transform: translateY(-3px);
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-5px);
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+    
+    .footer a:hover {
+      opacity: 0.8;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 25px;
+      padding: 10px 25px;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .carousel-item {
+        height: 400px;
+      }
+      
+      .carousel-caption h5 {
+        font-size: 1.5rem;
+      }
+      
+      .carousel-caption p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</body>
+</html>
