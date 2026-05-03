@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Pizzaria Sabor Divino</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #f5f5f5;
+  overflow-x: hidden;
+}
+
+/* Sidebar */
+#wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -280px;
+  transition: all 0.3s;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+  width: 280px;
+  position: fixed;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #8B0000, #d9534f);
+  color: white;
+  text-align: center;
+}
+
+#sidebar-wrapper .sidebar-heading img {
+  height: 35px;
+  margin-right: 10px;
+}
+
+#sidebar-wrapper .list-group-item {
+  background: transparent;
+  color: #ccc;
+  border: none;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s;
+  margin: 5px 0;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+  background: rgba(217,83,79,0.2);
+  color: #d9534f;
+  transform: translateX(10px);
+}
+
+#page-content-wrapper {
+  width: 100%;
+  margin-left: 0;
+  transition: all 0.3s;
+}
+
+#wrapper.toggled #sidebar-wrapper { margin-left: 0; }
+
+@media (min-width: 768px) {
+  #sidebar-wrapper { margin-left: 0; }
+  #page-content-wrapper { margin-left: 280px; width: calc(100% - 280px); }
+  #wrapper.toggled #sidebar-wrapper { margin-left: -280px; }
+  #wrapper.toggled #page-content-wrapper { margin-left: 0; width: 100%; }
+}
+
+/* Navbar Admin */
+.navbar-admin {
+  background: linear-gradient(90deg, #8B0000, #d9534f) !important;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#menu-toggle {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+#menu-toggle:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.05);
+}
+
+/* Cards */
+.stat-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-left: 4px solid #d9534f;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #8B0000, #d9534f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.stat-info h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.stat-info p { color: #666; margin-bottom: 0; }
+
+/* Gráficos */
+.chart-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+/* Tabelas */
+.table-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.table thead th {
+  color: #8B0000;
+  border-bottom: 2px solid #8B0000;
+}
+
+.table tbody tr:hover {
+  background: #fff5f5;
+}
+
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.activity-item {
+  padding: 1rem;
+  border-left: 3px solid #d9534f;
+  background: #f8f9fa;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.activity-item:hover {
+  transform: translateX(5px);
+  background: #fff5f5;
+}
+
+.activity-time {
+  font-size: 0.75rem;
+  color: #d9534f;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-card, .chart-card, .table-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+</style>
+</head>
+<body>
+
+<div class="d-flex" id="wrapper">
+
+<div id="sidebar-wrapper">
+  <div class="sidebar-heading">
+    <img src="./img/logo.png" alt="Logo"> Sabor Admin
+  </div>
+  <div class="list-group list-group-flush">
+    <a href="#" class="list-group-item" data-page="dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+    <a href="#" class="list-group-item" data-page="pedidos"><i class="fas fa-pizza-slice me-2"></i> Pedidos</a>
+    <a href="#" class="list-group-item" data-page="cardapio"><i class="fas fa-utensils me-2"></i> Cardápio</a>
+    <a href="#" class="list-group-item" data-page="clientes"><i class="fas fa-users me-2"></i> Clientes</a>
+    <a href="#" class="list-group-item" data-page="relatorios"><i class="fas fa-chart-line me-2"></i> Relatórios</a>
+    <a href="#" class="list-group-item" id="logoutAdmin"><i class="fas fa-sign-out-alt me-2"></i> Sair</a>
+  </div>
+</div>
+
+<div id="page-content-wrapper">
+
+<nav class="navbar navbar-admin">
+  <button class="btn" id="menu-toggle">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="ms-auto">
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-white" data-bs-toggle="dropdown">
+        <i class="fas fa-user-circle fa-2x me-2"></i>
+        <span>Administrador</span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="index.html"><i class="fas fa-store me-2"></i> Ver Site</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#" id="logoutDropdown"><i class="fas fa-sign-out-alt me-2"></i> Sair</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid p-4" id="mainContent">
+
+<div id="dashboardContent">
+  <h1 class="mb-4">🍕 Dashboard da Pizzaria</h1>
+  <p class="text-muted mb-4">Bem-vindo de volta! Aqui está o resumo do seu negócio.</p>
+
+  <div class="row g-4 mb-4">
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="stat-info">
+          <h3 id="totalSales">R$ 28.450</h3>
+          <p>Vendas do Mês</p>
+          <span class="text-success"><i class="fas fa-arrow-up"></i> +23%</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-pizza-slice"></i></div>
+        <div class="stat-info">
+          <h3 id="totalOrders">1.245</h3>
+          <p>Pedidos</p>
+          <span class="text-success"><i class="fas fa-arrow-up"></i> +15%</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+          <h3 id="totalCustomers">892</h3>
+          <p>Clientes</p>
+          <span class="text-success"><i class="fas fa-arrow-up"></i> +12%</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-star"></i></div>
+        <div class="stat-info">
+          <h3 id="totalRating">4.8</h3>
+          <p>Avaliação Média</p>
+          <span class="text-warning"><i class="fas fa-star"></i> +0.2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-8">
+      <div class="chart-card">
+        <h5><i class="fas fa-chart-line me-2" style="color: #d9534f;"></i> Vendas por Mês</h5>
+        <canvas id="salesChart" style="max-height: 300px;"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="chart-card">
+        <h5><i class="fas fa-chart-pie me-2" style="color: #d9534f;"></i> Pizzas Mais Vendidas</h5>
+        <canvas id="pizzaChart" style="max-height: 300px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="table-card">
+        <h5 class="mb-3"><i class="fas fa-clock me-2" style="color: #d9534f;"></i> Últimos Pedidos</h5>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr><th>ID</th><th>Cliente</th><th>Pizza</th><th>Total</th><th>Status</th><th>Data</th></tr>
+            </thead>
+            <tbody id="ordersTable">
+              <tr><td>#001</td><td>João Silva</td><td>Calabresa</td><td>R$ 45,90</td><td><span class="badge bg-warning">Pendente</span></td><td>10 min</td></tr>
+              <tr><td>#002</td><td>Maria Santos</td><td>Frango Catupiry</td><td>R$ 52,90</td><td><span class="badge bg-success">Entregue</span></td><td>30 min</td></tr>
+              <tr><td>#003</td><td>Pedro Lima</td><td>Margherita</td><td>R$ 49,90</td><td><span class="badge bg-info">Preparando</span></td><td>1 hora</td></tr>
+              <tr><td>#004</td><td>Ana Costa</td><td>Combo Família</td><td>R$ 89,90</td><td><span class="badge bg-warning">Pendente</span></td><td>15 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="table-card">
+        <h5 class="mb-3"><i class="fas fa-bell me-2" style="color: #d9534f;"></i> Atividades Recentes</h5>
+        <div class="activity-feed">
+          <div class="activity-item"><strong>🛒 Novo Pedido</strong><span class="activity-time float-end">5 min</span><p class="mb-0">Pedido #005 - Pizza Pepperoni</p></div>
+          <div class="activity-item"><strong>✅ Pedido Entregue</strong><span class="activity-time float-end">20 min</span><p class="mb-0">Pedido #002 entregue com sucesso</p></div>
+          <div class="activity-item"><strong>⭐ Novo Cliente</strong><span class="activity-time float-end">1 hora</span><p class="mb-0">Carlos Eduardo se cadastrou</p></div>
+          <div class="activity-item"><strong>📊 Relatório</strong><span class="activity-time float-end">2 horas</span><p class="mb-0">Relatório de vendas gerado</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/script.js"></script>
+
+<script>
+const ctx = document.getElementById('salesChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    datasets: [{
+      label: 'Vendas (R$)', data: [12500, 14800, 16200, 18900, 21500, 24800, 28900, 32500, 36800, 41200, 45800, 48920],
+      borderColor: '#d9534f', backgroundColor: 'rgba(217,83,79,0.1)', borderWidth: 3, fill: true, tension: 0.4
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'top' } } }
+});
+
+const ctx2 = document.getElementById('pizzaChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['Calabresa (32%)', 'Frango Catupiry (28%)', 'Margherita (22%)', 'Portuguesa (18%)'],
+    datasets: [{ data: [32, 28, 22, 18], backgroundColor: ['#d9534f', '#e67e22', '#f1c40f', '#2ecc71'] }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+});
+
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  document.getElementById('wrapper').classList.toggle('toggled');
+});
+</script>
+</body>
+</html>

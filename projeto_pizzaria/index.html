@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabor Divino - A Melhor Pizza da Cidade!</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<div class="container">
+<a class="navbar-brand" href="index.html">
+<img src="./img/logo.png" alt="Logo" height="40" class="me-2">
+Sabor Divino
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="#cardapio">Cardápio</a></li>
+<li class="nav-item"><a class="nav-link" href="#promocoes">Promoções</a></li>
+<li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+<li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user"></i> Login</a></li>
+<li class="nav-item"><a class="nav-link" href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a></li>
+<li class="nav-item">
+<a class="nav-link cart-link" href="#" id="cartBtn">
+<i class="fas fa-shopping-cart"></i> Carrinho
+<span id="cartCount" class="cart-badge">0</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- CARROSSEL COM BANNERS -->
+<header class="hero-section" id="home">
+<div id="pizzaCarousel" class="carousel slide" data-bs-ride="carousel">
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#pizzaCarousel" data-bs-slide-to="0" class="active"></button>
+<button type="button" data-bs-target="#pizzaCarousel" data-bs-slide-to="1"></button>
+<button type="button" data-bs-target="#pizzaCarousel" data-bs-slide-to="2"></button>
+</div>
+
+<div class="carousel-inner">
+<div class="carousel-item active">
+<img src="./img/banner1.png" class="d-block w-100" alt="Pizza Especial">
+<div class="carousel-caption">
+<h5 class="animate__animated animate__fadeInUp">🍕 A Melhor Pizza da Cidade! 🍕</h5>
+<p>Ingredientes frescos e sabor inigualável</p>
+<a href="#cardapio" class="btn btn-warning btn-lg">VER CARDÁPIO</a>
+</div>
+</div>
+
+<div class="carousel-item">
+<img src="./img/banner2.png" class="d-block w-100" alt="Promoção">
+<div class="carousel-caption">
+<h5 class="animate__animated animate__fadeInUp">🎉 Promoção Imperdível! 🎉</h5>
+<p>Peça 2 pizzas grandes e ganhe 1 refrigerante 2L</p>
+<a href="#promocoes" class="btn btn-danger btn-lg">APROVEITAR</a>
+</div>
+</div>
+
+<div class="carousel-item">
+<img src="./img/banner3.png" class="d-block w-100" alt="Delivery">
+<div class="carousel-caption">
+<h5 class="animate__animated animate__fadeInUp">🚚 Delivery Rápido! 🚚</h5>
+<p>Entregamos em até 40 minutos ou o delivery é grátis</p>
+<a href="#cardapio" class="btn btn-warning btn-lg">FAZER PEDIDO</a>
+</div>
+</div>
+</div>
+
+<button class="carousel-control-prev" type="button" data-bs-target="#pizzaCarousel" data-bs-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#pizzaCarousel" data-bs-slide="next">
+<span class="carousel-control-next-icon"></span>
+</button>
+</div>
+</header>
+
+<!-- CARDÁPIO COMPLETO -->
+<section id="cardapio" class="container my-5">
+<h2 class="text-center mb-5">🍕 Nosso Cardápio 🍕</h2>
+<p class="text-center text-muted mb-5">As pizzas mais amadas da cidade, preparadas com ingredientes selecionados</p>
+
+<div class="row g-4" id="menuContainer">
+  <!-- Pizza 1 -->
+  <div class="col-md-6 col-lg-4">
+    <div class="menu-item-card">
+      <img src="./img/banner1.png" alt="Calabresa" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">🔥 Pizza de Calabresa</h5>
+        <p class="card-text">Molho especial, mussarela, calabresa fatiada, cebola e orégano</p>
+        <div class="price">R$ 45,90</div>
+        <button class="btn btn-danger btn-sm mt-2 order-btn" data-name="Calabresa" data-price="45.90">
+          <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pizza 2 -->
+  <div class="col-md-6 col-lg-4">
+    <div class="menu-item-card">
+      <img src="./img/banner2.png" alt="Frango com Catupiry" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">🐔 Frango com Catupiry</h5>
+        <p class="card-text">Frango desfiado, catupiry cremoso, milho e azeitonas</p>
+        <div class="price">R$ 52,90</div>
+        <button class="btn btn-danger btn-sm mt-2 order-btn" data-name="Frango com Catupiry" data-price="52.90">
+          <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pizza 3 -->
+  <div class="col-md-6 col-lg-4">
+    <div class="menu-item-card">
+      <img src="./img/banner3.png" alt="Margherita" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">🍅 Pizza Margherita</h5>
+        <p class="card-text">Molho de tomate, mussarela de búfala, manjericão e azeite</p>
+        <div class="price">R$ 49,90</div>
+        <button class="btn btn-danger btn-sm mt-2 order-btn" data-name="Margherita" data-price="49.90">
+          <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pizza 4 -->
+  <div class="col-md-6 col-lg-4">
+    <div class="menu-item-card">
+      <img src="./img/banner1.png" alt="Portuguesa" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">🇵🇹 Pizza Portuguesa</h5>
+        <p class="card-text">Presunto, ovos, cebola, ervilha, queijo e azeitonas</p>
+        <div class="price">R$ 54,90</div>
+        <button class="btn btn-danger btn-sm mt-2 order-btn" data-name="Portuguesa" data-price="54.90">
+          <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pizza 5 -->
+  <div class="col-md-6 col-lg-4">
+    <div class="menu-item-card">
+      <img src="./img/banner2.png" alt="Quatro Queijos" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">🧀 Quatro Queijos</h5>
+        <p class="card-text">Mussarela, provolone, parmesão e gorgonzola</p>
+        <div class="price">R$ 58,90</div>
+        <button class="btn btn-danger btn-sm mt-2 order-btn" data-name="Quatro Queijos" data-price="58.90">
+          <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pizza 6 -->
+  <div class="col-md-6 col-lg-4">
+    <div class="menu-item-card">
+      <img src="./img/banner3.png" alt="Pepperoni" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">🌶️ Pizza Pepperoni</h5>
+        <p class="card-text">Pepperoni picante, mussarela e molho especial</p>
+        <div class="price">R$ 56,90</div>
+        <button class="btn btn-danger btn-sm mt-2 order-btn" data-name="Pepperoni" data-price="56.90">
+          <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PROMOÇÕES -->
+<section id="promocoes" class="py-5" style="background: linear-gradient(135deg, #8B0000 0%, #d9534f 100%);">
+<div class="container">
+<h2 class="text-center text-white mb-5">🎁 Ofertas Especiais 🎁</h2>
+<div class="row g-4">
+<div class="col-md-4">
+<div class="promo-card">
+<div class="card-body text-center">
+<i class="fas fa-pizza-slice fa-3x" style="color: #d9534f;"></i>
+<h5 class="card-title">Combo Família</h5>
+<p class="card-text">1 Pizza Grande + 1 Pizza Média + Refri 2L</p>
+<div class="price">R$ 89,90</div>
+<button class="btn btn-danger btn-sm mt-2 promo-btn" data-name="Combo Família" data-price="89.90">
+  <i class="fas fa-cart-plus"></i> Aproveitar
+</button>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="promo-card">
+<div class="card-body text-center">
+<i class="fas fa-gift fa-3x" style="color: #d9534f;"></i>
+<h5 class="card-title">Terça da Pizza</h5>
+<p class="card-text">Toda terça-feira: 30% OFF em qualquer pizza!</p>
+<div class="price">30% OFF</div>
+<button class="btn btn-danger btn-sm mt-2" disabled>Válido às terças</button>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="promo-card">
+<div class="card-body text-center">
+<i class="fas fa-truck fa-3x" style="color: #d9534f;"></i>
+<h5 class="card-title">Delivery Grátis</h5>
+<p class="card-text">Pedidos acima de R$ 70,00 - Entrega grátis!</p>
+<div class="price">Frete Grátis</div>
+<button class="btn btn-danger btn-sm mt-2" disabled>Pedido Mínimo</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="container my-5">
+<h2 class="text-center mb-5">📞 Fale Conosco</h2>
+<div class="row">
+<div class="col-lg-6 mb-4">
+<div class="contact-info-card">
+<i class="fas fa-phone-alt"></i>
+<h4>Telefone</h4>
+<p>(11) 99999-9999</p>
+<p>(11) 3456-7890</p>
+</div>
+</div>
+<div class="col-lg-6 mb-4">
+<div class="contact-info-card">
+<i class="fas fa-map-marker-alt"></i>
+<h4>Endereço</h4>
+<p>Rua das Pizzas, 123 - Centro</p>
+<p>São Paulo - SP, 01000-000</p>
+</div>
+</div>
+<div class="col-lg-6 mb-4">
+<div class="contact-info-card">
+<i class="fas fa-envelope"></i>
+<h4>Email</h4>
+<p>contato@sabordivino.com.br</p>
+<p>pedidos@sabordivino.com.br</p>
+</div>
+</div>
+<div class="col-lg-6 mb-4">
+<div class="contact-info-card">
+<i class="fas fa-clock"></i>
+<h4>Horário de Funcionamento</h4>
+<p>Terça a Domingo: 18h às 23h</p>
+<p>Sexta e Sábado: 18h à 01h</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section py-5">
+<div class="container text-center">
+<h3 class="text-white mb-3">📧 Receba Nossas Ofertas</h3>
+<p class="text-white mb-4">Cadastre-se e ganhe 10% OFF na primeira compra!</p>
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="input-group">
+<input type="email" class="form-control" placeholder="Seu melhor e-mail" id="newsletterEmail">
+<button class="btn btn-warning" id="newsletterBtn">Assinar</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- MODAL DO CARRINHO -->
+<div id="cartModal" class="cart-modal">
+<div class="cart-modal-content">
+<div class="cart-modal-header">
+<h4><i class="fas fa-shopping-cart"></i> Meu Carrinho</h4>
+<span class="cart-modal-close">&times;</span>
+</div>
+<div class="cart-modal-body" id="cartItems">
+<p class="text-center text-muted">Seu carrinho está vazio</p>
+</div>
+<div class="cart-modal-footer">
+<div class="cart-total">
+<strong>Total: <span id="cartTotal">R$ 0,00</span></strong>
+</div>
+<button class="btn btn-success" id="checkoutBtn">Finalizar Pedido</button>
+<button class="btn btn-secondary" id="clearCartBtn">Limpar Carrinho</button>
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white pt-5 pb-3">
+<div class="container">
+<div class="row">
+<div class="col-md-4 mb-4">
+<h5><img src="./img/logo.png" alt="Logo" height="30" class="me-2"> Sabor Divino</h5>
+<p>A verdadeira pizza italiana com ingredientes selecionados e muito amor.</p>
+</div>
+<div class="col-md-4 mb-4">
+<h5>Links Rápidos</h5>
+<ul class="list-unstyled">
+<li><a href="#home" class="text-white-50">Home</a></li>
+<li><a href="#cardapio" class="text-white-50">Cardápio</a></li>
+<li><a href="#promocoes" class="text-white-50">Promoções</a></li>
+<li><a href="#contato" class="text-white-50">Contato</a></li>
+</ul>
+</div>
+<div class="col-md-4 mb-4">
+<h5>Redes Sociais</h5>
+<div class="social-icons">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-whatsapp"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+</div>
+<hr>
+<div class="text-center">
+<p class="mb-0">&copy; 2024 Sabor Divino - Todos os direitos reservados.</p>
+</div>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/script.js"></script>
+
+<style>
+/* Estilos adicionais para o carrinho modal */
+.cart-modal {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.6);
+z-index: 9999;
+justify-content: center;
+align-items: center;
+}
+.cart-modal-content {
+background: white;
+border-radius: 15px;
+width: 90%;
+max-width: 500px;
+max-height: 80vh;
+overflow: hidden;
+animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+from { transform: translateY(-50px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+.cart-modal-header {
+background: linear-gradient(135deg, #8B0000, #d9534f);
+color: white;
+padding: 15px 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.cart-modal-close {
+font-size: 28px;
+cursor: pointer;
+transition: 0.3s;
+}
+.cart-modal-close:hover { transform: scale(1.2); }
+.cart-modal-body { padding: 20px; max-height: 400px; overflow-y: auto; }
+.cart-modal-footer { padding: 15px 20px; border-top: 1px solid #ddd; }
+.cart-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
+border-bottom: 1px solid #eee;
+}
+.cart-item-info h6 { margin: 0; }
+.cart-item-info small { color: #666; }
+.cart-item-actions button {
+background: none;
+border: none;
+cursor: pointer;
+font-size: 18px;
+margin: 0 5px;
+}
+.cart-badge {
+background: #ff0000;
+color: white;
+border-radius: 50%;
+padding: 2px 8px;
+font-size: 12px;
+margin-left: 5px;
+}
+.contact-info-card {
+background: #f8f9fa;
+border-radius: 15px;
+padding: 30px;
+text-align: center;
+transition: all 0.3s;
+}
+.contact-info-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.contact-info-card i {
+font-size: 3rem;
+color: #d9534f;
+margin-bottom: 15px;
+}
+.newsletter-section {
+background: linear-gradient(135deg, #8B0000 0%, #d9534f 100%);
+}
+.promo-card {
+background: white;
+border-radius: 20px;
+overflow: hidden;
+transition: all 0.3s;
+}
+.promo-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+</style>
+
+</body>
+</html>
