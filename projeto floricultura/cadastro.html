@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - BellaFlor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <img src="img/logo.png" alt="BellaFlor">
+                <h2>BellaFlor</h2>
+            </div>
+            <h3>Crie sua conta</h3>
+            <p class="auth-subtitle">Cadastre-se e ganhe 10% de desconto na primeira compra</p>
+            
+            <form id="register-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nome</label>
+                        <input type="text" id="reg-name" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-user-friends"></i> Sobrenome</label>
+                        <input type="text" id="reg-lastname" required placeholder="Seu sobrenome">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="reg-email" required placeholder="seu@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Telefone</label>
+                    <input type="tel" id="reg-phone" placeholder="(11) 99999-9999">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="reg-password" required placeholder="••••••••">
+                        <span class="toggle-password" onclick="togglePassword('reg-password')">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-check-circle"></i> Confirmar Senha</label>
+                        <input type="password" id="reg-confirm" required placeholder="••••••••">
+                        <span class="toggle-password" onclick="togglePassword('reg-confirm')">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terms-checkbox" required>
+                        Eu concordo com os <a href="#" class="terms-link">Termos de Serviço</a> e 
+                        <a href="#" class="terms-link">Política de Privacidade</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-user-plus"></i> Cadastrar
+                </button>
+            </form>
+            
+            <div class="auth-divider">
+                <span>ou</span>
+            </div>
+            
+            <button class="btn-google">
+                <i class="fab fa-google"></i> Cadastrar com Google
+            </button>
+            
+            <p class="auth-link">Já tem uma conta? <a href="login.html">Faça login</a></p>
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+        </div>
+    </div>
+    
+    <!-- Mensagem de sucesso modal -->
+    <div id="success-modal" class="modal-success">
+        <div class="modal-success-content">
+            <i class="fas fa-check-circle"></i>
+            <h3>Cadastro realizado!</h3>
+            <p>Bem-vindo à família BellaFlor 🎉</p>
+            <button class="btn-primary" onclick="closeSuccessModal()">Continuar</button>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

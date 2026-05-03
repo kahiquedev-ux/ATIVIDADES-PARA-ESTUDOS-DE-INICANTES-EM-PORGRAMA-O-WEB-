@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - BellaFlor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="img/logo.png" alt="BellaFlor Logo">
+                    <span>BellaFlor</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="index.html">Início</a>
+                    <a href="produtos.html" class="active">Produtos</a>
+                    <a href="#" id="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+                    <a href="login.html"><i class="fas fa-user"></i> Entrar</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="products-page">
+            <div class="container">
+                <div class="products-layout">
+                    <!-- Sidebar de Filtros -->
+                    <aside class="filters-sidebar">
+                        <h3><i class="fas fa-filter"></i> Filtros</h3>
+                        
+                        <div class="filter-group">
+                            <h4>Categorias</h4>
+                            <label><input type="checkbox" value="todos" checked> Todos</label>
+                            <label><input type="checkbox" value="buques"> Buquês Românticos</label>
+                            <label><input type="checkbox" value="aniversario"> Aniversário</label>
+                            <label><input type="checkbox" value="casamento"> Casamento</label>
+                            <label><input type="checkbox" value="plantas"> Plantas</label>
+                            <label><input type="checkbox" value="flores"> Flores de Vaso</label>
+                            <label><input type="checkbox" value="presentes"> Kits Presente</label>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Preço</h4>
+                            <div class="price-range">
+                                <input type="range" id="price-min" min="0" max="500" value="0">
+                                <input type="range" id="price-max" min="0" max="500" value="500">
+                                <div class="price-values">
+                                    <span>R$ <span id="min-price-val">0</span></span>
+                                    <span>R$ <span id="max-price-val">500</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Avaliação</h4>
+                            <label><input type="checkbox" value="5"> 5 estrelas ⭐⭐⭐⭐⭐</label>
+                            <label><input type="checkbox" value="4"> 4+ estrelas ⭐⭐⭐⭐</label>
+                            <label><input type="checkbox" value="3"> 3+ estrelas ⭐⭐⭐</label>
+                        </div>
+
+                        <button class="btn-filter-reset" id="reset-filters">Limpar Filtros</button>
+                    </aside>
+
+                    <!-- Listagem de Produtos -->
+                    <div class="products-main">
+                        <div class="products-header">
+                            <h2>Nossos Produtos</h2>
+                            <div class="products-sort">
+                                <label>Ordenar por:</label>
+                                <select id="sort-products">
+                                    <option value="default">Destaque</option>
+                                    <option value="price-asc">Menor Preço</option>
+                                    <option value="price-desc">Maior Preço</option>
+                                    <option value="name">Nome A-Z</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="products-grid" id="all-products-grid">
+                            <!-- 30 produtos serão carregados via JS -->
+                        </div>
+                        <div class="products-result-count" id="result-count"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar do Carrinho (mesmo do index) -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Meu Carrinho</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p class="empty-cart">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+            <div class="shipping-calc">
+                <h4>Calcular Frete</h4>
+                <div class="shipping-input">
+                    <input type="text" id="cep-input" placeholder="Digite seu CEP" maxlength="9">
+                    <button id="calc-shipping">Calcular</button>
+                </div>
+                <div class="shipping-result" id="shipping-result"></div>
+            </div>
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">R$ 0,00</span>
+            </div>
+            <div class="cart-total">
+                <span>Frete:</span>
+                <span id="cart-frete">R$ 0,00</span>
+            </div>
+            <div class="cart-grandtotal">
+                <span>Total:</span>
+                <span id="cart-grandtotal">R$ 0,00</span>
+            </div>
+            <button class="btn-checkout">Finalizar Compra</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <footer>
+        <!-- Mesmo footer do index -->
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BellaFlor</h3>
+                    <p>Flores que encantam e transformam momentos especiais em memórias inesquecíveis.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <a href="index.html">Início</a>
+                    <a href="produtos.html">Produtos</a>
+                    <a href="#">Sobre Nós</a>
+                    <a href="#">Contato</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+                    <p><i class="fas fa-envelope"></i> contato@bellaflor.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Horário de Funcionamento</h4>
+                    <p>Seg-Sex: 8h às 20h</p>
+                    <p>Sábado: 9h às 18h</p>
+                    <p>Domingo: 10h às 14h</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BellaFlor - Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

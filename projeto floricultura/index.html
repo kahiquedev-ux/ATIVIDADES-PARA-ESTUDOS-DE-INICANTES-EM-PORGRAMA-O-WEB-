@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BellaFlor - Flores que encantam</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="img/logo.png" alt="BellaFlor Logo">
+                    <span>BellaFlor</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="index.html" class="active">Início</a>
+                    <a href="produtos.html">Produtos</a>
+                    <a href="#" id="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+                    <a href="login.html"><i class="fas fa-user"></i> Entrar</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Carrossel com 5 slides usando a mesma imagem banner.png -->
+        <section class="hero">
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <div class="slide active">
+                        <img src="img/banner.png" alt="Banner 1">
+                        <div class="slide-content">
+                            <h1>Bem-vindo à BellaFlor</h1>
+                            <p>Flores frescas para todas as ocasiões</p>
+                            <a href="produtos.html" class="btn-primary">Comprar Agora</a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="img/banner.png" alt="Banner 2">
+                        <div class="slide-content">
+                            <h1>Buquês Personalizados</h1>
+                            <p>Crie o presente perfeito</p>
+                            <a href="produtos.html" class="btn-primary">Saiba Mais</a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="img/banner.png" alt="Banner 3">
+                        <div class="slide-content">
+                            <h1>Entrega Rápida</h1>
+                            <p>Receba suas flores em até 2 horas</p>
+                            <a href="produtos.html" class="btn-primary">Ver Entregas</a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="img/banner.png" alt="Banner 4">
+                        <div class="slide-content">
+                            <h1>Promoções Especiais</h1>
+                            <p>Descontos de até 30%</p>
+                            <a href="produtos.html" class="btn-primary">Aproveitar</a>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="img/banner.png" alt="Banner 5">
+                        <div class="slide-content">
+                            <h1>Assinatura de Flores</h1>
+                            <p>Flores frescas todo mês</p>
+                            <a href="produtos.html" class="btn-primary">Assinar</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categorias em Destaque -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title">Nossas Categorias</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Buquês Românticos</h3>
+                        <p>A partir de R$ 89,90</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-birthday-cake"></i>
+                        <h3>Aniversário</h3>
+                        <p>A partir de R$ 69,90</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-church"></i>
+                        <h3>Casamentos</h3>
+                        <p>Sob consulta</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Plantas</h3>
+                        <p>A partir de R$ 49,90</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produtos em Destaque -->
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Produtos em Destaque</h2>
+                <div class="products-grid" id="featured-products">
+                    <!-- Produtos serão carregados via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefícios -->
+        <section class="benefits">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fas fa-truck"></i>
+                        <h3>Entrega Rápida</h3>
+                        <p>Em até 2 horas</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-lock"></i>
+                        <h3>Pagamento Seguro</h3>
+                        <p>100% protegido</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-undo-alt"></i>
+                        <h3>Garantia de Frescor</h3>
+                        <p>Ou seu dinheiro de volta</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-headset"></i>
+                        <h3>Suporte 24/7</h3>
+                        <p>Atendimento especializado</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar do Carrinho -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Meu Carrinho</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p class="empty-cart">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+            <div class="shipping-calc">
+                <h4>Calcular Frete</h4>
+                <div class="shipping-input">
+                    <input type="text" id="cep-input" placeholder="Digite seu CEP" maxlength="9">
+                    <button id="calc-shipping">Calcular</button>
+                </div>
+                <div class="shipping-result" id="shipping-result"></div>
+            </div>
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">R$ 0,00</span>
+            </div>
+            <div class="cart-total">
+                <span>Frete:</span>
+                <span id="cart-frete">R$ 0,00</span>
+            </div>
+            <div class="cart-grandtotal">
+                <span>Total:</span>
+                <span id="cart-grandtotal">R$ 0,00</span>
+            </div>
+            <button class="btn-checkout">Finalizar Compra</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BellaFlor</h3>
+                    <p>Flores que encantam e transformam momentos especiais em memórias inesquecíveis.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <a href="index.html">Início</a>
+                    <a href="produtos.html">Produtos</a>
+                    <a href="#">Sobre Nós</a>
+                    <a href="#">Contato</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+                    <p><i class="fas fa-envelope"></i> contato@bellaflor.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Horário de Funcionamento</h4>
+                    <p>Seg-Sex: 8h às 20h</p>
+                    <p>Sábado: 9h às 18h</p>
+                    <p>Domingo: 10h às 14h</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BellaFlor - Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

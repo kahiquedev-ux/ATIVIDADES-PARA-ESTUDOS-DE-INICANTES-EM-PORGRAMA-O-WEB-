@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - BellaFlor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="img/logo.png" alt="BellaFlor Logo">
+                    <span>BellaFlor Admin</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="index.html">Site</a>
+                    <a href="admin.html" class="active">Dashboard</a>
+                    <a href="#" id="logout-admin"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <div class="admin-container">
+            <div class="admin-sidebar">
+                <div class="admin-user">
+                    <i class="fas fa-user-circle"></i>
+                    <h4>Administrador</h4>
+                    <p>admin@bellaflor.com</p>
+                </div>
+                <nav class="admin-nav">
+                    <a href="#" class="admin-nav-item active" data-tab="dashboard">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </a>
+                    <a href="#" class="admin-nav-item" data-tab="products">
+                        <i class="fas fa-box"></i> Produtos
+                    </a>
+                    <a href="#" class="admin-nav-item" data-tab="add-product">
+                        <i class="fas fa-plus-circle"></i> Novo Produto
+                    </a>
+                    <a href="#" class="admin-nav-item" data-tab="orders">
+                        <i class="fas fa-shopping-bag"></i> Pedidos
+                    </a>
+                </nav>
+            </div>
+
+            <div class="admin-content">
+                <!-- Tab Dashboard -->
+                <div id="dashboard-tab" class="admin-tab active">
+                    <h2>Dashboard</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-box"></i>
+                            <div class="stat-info">
+                                <h3>Total Produtos</h3>
+                                <p id="total-products">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-shopping-cart"></i>
+                            <div class="stat-info">
+                                <h3>Pedidos Hoje</h3>
+                                <p>12</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div class="stat-info">
+                                <h3>Vendas Mês</h3>
+                                <p>R$ 15.430,00</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-info">
+                                <h3>Clientes</h3>
+                                <p>284</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3>Vendas por Mês</h3>
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Produtos Mais Vendidos</h3>
+                            <canvas id="top-products-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Produtos -->
+                <div id="products-tab" class="admin-tab">
+                    <h2>Gerenciar Produtos</h2>
+                    <div class="admin-products-header">
+                        <input type="text" id="search-product-admin" placeholder="Buscar produto...">
+                    </div>
+                    <div class="admin-products-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Imagem</th>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Preço</th>
+                                    <th>Estoque</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-list">
+                                <!-- Lista de produtos via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab Adicionar Produto -->
+                <div id="add-product-tab" class="admin-tab">
+                    <h2>Adicionar Novo Produto</h2>
+                    <form id="admin-product-form" class="admin-form">
+                        <div class="form-group">
+                            <label>Nome do Produto</label>
+                            <input type="text" id="prod-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <select id="prod-category" required>
+                                <option value="buques">Buquês Românticos</option>
+                                <option value="aniversario">Aniversário</option>
+                                <option value="casamento">Casamento</option>
+                                <option value="plantas">Plantas</option>
+                                <option value="flores">Flores de Vaso</option>
+                                <option value="presentes">Kits Presente</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Preço (R$)</label>
+                                <input type="number" id="prod-price" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Preço Promocional (opcional)</label>
+                                <input type="number" id="prod-promo" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>Estoque</label>
+                                <input type="number" id="prod-stock" value="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <textarea id="prod-description" rows="3" placeholder="Descrição detalhada do produto..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Imagem do Produto</label>
+                            <input type="file" id="prod-image" accept="image/*">
+                            <small>Use img/produto.png como padrão</small>
+                        </div>
+                        <button type="submit" class="btn-primary">Adicionar Produto</button>
+                    </form>
+                    <div id="form-message"></div>
+                </div>
+
+                <!-- Tab Pedidos -->
+                <div id="orders-tab" class="admin-tab">
+                    <h2>Pedidos Recentes</h2>
+                    <div class="admin-orders-list">
+                        <div class="order-card">
+                            <div class="order-header">
+                                <span><strong>Pedido #12345</strong></span>
+                                <span class="order-status status-pending">Pendente</span>
+                            </div>
+                            <div class="order-details">
+                                <p>Cliente: Ana Silva</p>
+                                <p>Total: R$ 159,90</p>
+                                <p>Data: 15/12/2024</p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-view-order"><i class="fas fa-eye"></i> Visualizar</button>
+                                <button class="btn-update-status"><i class="fas fa-truck"></i> Atualizar Status</button>
+                            </div>
+                        </div>
+                        <div class="order-card">
+                            <div class="order-header">
+                                <span><strong>Pedido #12344</strong></span>
+                                <span class="order-status status-delivered">Entregue</span>
+                            </div>
+                            <div class="order-details">
+                                <p>Cliente: Carlos Santos</p>
+                                <p>Total: R$ 89,90</p>
+                                <p>Data: 14/12/2024</p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-view-order"><i class="fas fa-eye"></i> Visualizar</button>
+                                <button class="btn-update-status"><i class="fas fa-truck"></i> Atualizar Status</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Visualizar Produto -->
+        <div id="product-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h2>Detalhes do Produto</h2>
+                <div id="product-detail-content"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
